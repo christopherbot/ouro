@@ -1,10 +1,10 @@
 import 'phaser'
-import { Well } from './scenes/well'
+import { Title } from './scenes/title'
 
 const gameConfig = {
   width: 680,
   height: 400,
-  scene: Well,
+  scene: Title,
 }
 
 const game = new Phaser.Game(gameConfig)
