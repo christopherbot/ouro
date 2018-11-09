@@ -7,12 +7,21 @@ export class Title extends Phaser.Scene {
     return this.sys.game.config.height
   }
 
+  get middleX() {
+    return this.gameWidth / 2
+  }
+
+  get middleY() {
+    return this.gameHeight / 2
+  }
+
   preload() {
     this.load.spritesheet('snake', 'assets/snake.png', { frameWidth: 32, frameHeight: 32 })
   }
 
   create() {
-    this.snake = this.add.sprite(this.gameWidth / 2, this.gameHeight / 2, 'snake')
+    this.snake = this.add.sprite(this.middleX, this.middleY, 'snake')
+    this.isSnakeMovingUp = true
 
     this.anims.create({
       key: 'snakeDance',
@@ -22,5 +31,27 @@ export class Title extends Phaser.Scene {
     })
 
     this.snake.anims.play('snakeDance')
+  }
+
+  update(time, delta) {
+    this.snake.x -= delta / 8
+
+    if (this.snake.x < -16) {
+      this.snake.x = this.gameWidth + 16
+    }
+
+    if (this.isSnakeMovingUp) {
+      this.snake.y -= delta / 16
+
+      if (this.snake.y < this.middleY - 30) {
+        this.isSnakeMovingUp = false
+      }
+    } else {
+      this.snake.y += delta / 16
+
+      if (this.snake.y > this.middleY + 30) {
+        this.isSnakeMovingUp = true
+      }
+    }
   }
 }
