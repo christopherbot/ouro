@@ -15,11 +15,7 @@ export class Title extends Phaser.Scene {
     return this.gameHeight / 2
   }
 
-  preload() {
-    this.load.spritesheet('snake', 'assets/snake.png', { frameWidth: 32, frameHeight: 32 })
-  }
-
-  create() {
+  addSnake() {
     this.snake = this.add.sprite(this.middleX, this.middleY, 'snake')
     this.isSnakeMovingUp = true
 
@@ -33,7 +29,7 @@ export class Title extends Phaser.Scene {
     this.snake.anims.play('snakeDance')
   }
 
-  update(time, delta) {
+  moveSnake(delta) {
     this.snake.x -= delta / 8
 
     if (this.snake.x < -16) {
@@ -53,5 +49,17 @@ export class Title extends Phaser.Scene {
         this.isSnakeMovingUp = true
       }
     }
+  }
+
+  preload() {
+    this.load.spritesheet('snake', 'assets/snake.png', { frameWidth: 32, frameHeight: 32 })
+  }
+
+  create() {
+    this.addSnake()
+  }
+
+  update(time, delta) {
+    this.moveSnake(delta)
   }
 }
