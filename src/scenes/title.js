@@ -1,4 +1,4 @@
-export class Title extends Phaser.Scene {
+export default class Title extends Phaser.Scene {
   get gameWidth() {
     return this.sys.game.config.width
   }

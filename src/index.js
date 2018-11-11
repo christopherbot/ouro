@@ -1,5 +1,5 @@
 import 'phaser'
-import { Title } from './scenes/title'
+import Title from './scenes/title'
 
 const gameConfig = {
   width: 680,
