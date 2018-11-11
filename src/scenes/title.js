@@ -19,11 +19,24 @@ export class Title extends Phaser.Scene {
     return 'Ouro'
   }
 
+  get menuPrompt() {
+    return 'Press [Enter]'
+  }
+
   addGameTitle() {
     this.add.text(
       this.middleX,
       this.middleY + 100,
       this.gameTitle,
+      { fill: '#0F0' }
+    ).setOrigin(0.5, 1)
+  }
+
+  addMenuPrompt() {
+    this.add.text(
+      this.middleX,
+      this.middleY + 130,
+      this.menuPrompt,
       { fill: '#0F0' }
     ).setOrigin(0.5, 1)
   }
@@ -64,16 +77,26 @@ export class Title extends Phaser.Scene {
     }
   }
 
+  handleKeyPress() {
+    if (Phaser.Input.Keyboard.JustDown(this.enterKey)) {
+      console.log('TODO handle Enter key down')
+    }
+  }
+
   preload() {
     this.load.spritesheet('snake', 'assets/snake.png', { frameWidth: 32, frameHeight: 32 })
   }
 
   create() {
+    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+
     this.addGameTitle()
+    this.addMenuPrompt()
     this.addSnake()
   }
 
   update(time, delta) {
     this.moveSnake(delta)
+    this.handleKeyPress()
   }
 }
