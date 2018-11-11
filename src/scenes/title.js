@@ -15,6 +15,19 @@ export class Title extends Phaser.Scene {
     return this.gameHeight / 2
   }
 
+  get gameTitle() {
+    return 'Ouro'
+  }
+
+  addGameTitle() {
+    this.add.text(
+      this.middleX,
+      this.middleY + 100,
+      this.gameTitle,
+      { fill: '#0F0' }
+    ).setOrigin(0.5, 1)
+  }
+
   addSnake() {
     this.snake = this.add.sprite(this.middleX, this.middleY, 'snake')
     this.isSnakeMovingUp = true
@@ -56,6 +69,7 @@ export class Title extends Phaser.Scene {
   }
 
   create() {
+    this.addGameTitle()
     this.addSnake()
   }
 
