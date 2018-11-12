@@ -1,4 +1,8 @@
 export default class Menu extends Phaser.Scene {
+  constructor() {
+    super('menu')
+  }
+
   get gameWidth() {
     return this.sys.game.config.width
   }
