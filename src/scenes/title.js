@@ -1,4 +1,8 @@
 export default class Title extends Phaser.Scene {
+  constructor(props) {
+    super('title')
+  }
+
   get gameWidth() {
     return this.sys.game.config.width
   }
@@ -79,7 +83,7 @@ export default class Title extends Phaser.Scene {
 
   handleKeyPress() {
     if (Phaser.Input.Keyboard.JustDown(this.enterKey)) {
-      console.log('TODO handle Enter key down')
+      this.scene.start('menu')
     }
   }
 
