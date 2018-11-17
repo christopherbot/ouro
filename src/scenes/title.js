@@ -92,7 +92,7 @@ export default class Title extends Phaser.Scene {
   }
 
   create() {
-    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
 
     this.addGameTitle()
     this.addMenuPrompt()

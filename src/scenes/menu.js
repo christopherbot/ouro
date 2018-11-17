@@ -118,6 +118,10 @@ export default class Menu extends Phaser.Scene {
   }
 
   handleKeyPress() {
+    if (Phaser.Input.Keyboard.JustDown(this.enterKey)) {
+      this.scene.start('game')
+    }
+
     if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
       if (this.player1ColorIndex === this.colors.length - 1) {
         this.player1ColorIndex = 0
@@ -182,6 +186,7 @@ export default class Menu extends Phaser.Scene {
     this.keyA = this.addKey('A')
     this.keyS = this.addKey('S')
     this.keyD = this.addKey('D')
+    this.enterKey = this.addKey('ENTER')
 
     this.player1ColorIndex = 0
     this.player2ColorIndex = 1
