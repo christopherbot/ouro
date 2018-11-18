@@ -20,7 +20,7 @@ export default new Phaser.Class({
 
     this.nextUpdateTime = 0
 
-    this.direction = RIGHT
+    this.direction = DOWN
   },
 
   update(time) {
