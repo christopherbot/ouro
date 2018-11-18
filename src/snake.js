@@ -3,8 +3,6 @@ const DOWN = 1
 const LEFT = 2
 const RIGHT = 3
 
-const directionLoop = [RIGHT, DOWN, LEFT, UP]
-
 export default new Phaser.Class({
   initialize(scene, x, y) {
     this.scene = scene
@@ -22,15 +20,7 @@ export default new Phaser.Class({
 
     this.nextUpdateTime = 0
 
-    this.heading = RIGHT
-    this.directionLoopIndex = 0
-
-    const loopSnake = () => {
-      this.directionLoopIndex = Phaser.Math.Wrap(this.directionLoopIndex + 1, 0, directionLoop.length)
-      this.heading = directionLoop[this.directionLoopIndex]
-    }
-
-    scene.time.addEvent({ delay: 500, callback: loopSnake, loop: true })
+    this.direction = RIGHT
   },
 
   update(time) {
@@ -39,8 +29,32 @@ export default new Phaser.Class({
     }
   },
 
+  goLeft() {
+    if (this.direction === UP || this.direction === DOWN) {
+      this.direction = LEFT
+    }
+  },
+
+  goRight() {
+    if (this.direction === UP || this.direction === DOWN) {
+      this.direction = RIGHT
+    }
+  },
+
+  goUp() {
+    if (this.direction === LEFT || this.direction === RIGHT) {
+      this.direction = UP
+    }
+  },
+
+  goDown() {
+    if (this.direction === LEFT || this.direction === RIGHT) {
+      this.direction = DOWN
+    }
+  },
+
   move(time) {
-    switch(this.heading) {
+    switch(this.direction) {
       case UP:
         this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, this.scene.gameHeight / 10)
         break
