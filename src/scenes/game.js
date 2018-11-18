@@ -1,3 +1,5 @@
+import Snake from '../snake'
+
 export default class Game extends Phaser.Scene {
   constructor() {
     super('game')
@@ -20,14 +22,15 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
-
+    this.load.image('body', 'assets/body.png')
   }
 
   create() {
     this.add.text(this.middleX, 20, 'Game').setOrigin(0.5, 0)
+    this.snake = new Snake(this, 10, 20)
   }
 
-  update() {
-
+  update(time) {
+    this.snake.update(time)
   }
 }
