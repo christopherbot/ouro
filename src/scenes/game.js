@@ -1,4 +1,5 @@
 import Snake from '../snake'
+import Food from '../food'
 
 export default class Game extends Phaser.Scene {
   constructor() {
@@ -64,6 +65,9 @@ export default class Game extends Phaser.Scene {
 
     this.snake1 = new Snake(this, 10, 10, { color: this.color1 })
     this.snake2 = new Snake(this, 50, 10, { color: this.color2 })
+
+    this.food1 = new Food(this, 10, 20, { color: this.color1 })
+    this.food2 = new Food(this, 50, 20, { color: this.color2 })
   }
 
   update(time) {
