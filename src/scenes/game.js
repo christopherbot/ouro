@@ -21,6 +21,18 @@ export default class Game extends Phaser.Scene {
     return this.gameHeight / 2
   }
 
+  handleKeyPress() {
+    if (this.cursors.right.isDown) {
+      this.snake.goRight()
+    } else if (this.cursors.left.isDown) {
+      this.snake.goLeft()
+    } else if (this.cursors.up.isDown) {
+      this.snake.goUp()
+    } else if (this.cursors.down.isDown) {
+      this.snake.goDown()
+    }
+  }
+
   preload() {
     this.load.image('body', 'assets/body.png')
   }
@@ -29,19 +41,14 @@ export default class Game extends Phaser.Scene {
     this.color1 = data.color1
     this.color2 = data.color2
     this.add.text(this.middleX, 20, 'Game').setOrigin(0.5, 0)
-    this.snake = new Snake(this, 10, 20, { color: this.color1 })
 
-    let movements = ['goRight', 'goDown', 'goLeft', 'goUp']
+    this.cursors = this.input.keyboard.createCursorKeys()
 
-    const loopSnake = () => {
-      movements.push(movements.splice(0, 1)[0])
-      this.snake[movements[0]]()
-    }
-
-    this.time.addEvent({ delay: 500, callback: loopSnake, loop: true })
+    this.snake = new Snake(this, 10, 20, { color: this.color2 })
   }
 
   update(time) {
+    this.handleKeyPress()
     this.snake.update(time)
   }
 }
