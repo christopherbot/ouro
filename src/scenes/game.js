@@ -25,9 +25,11 @@ export default class Game extends Phaser.Scene {
     this.load.image('body', 'assets/body.png')
   }
 
-  create() {
+  create(data) {
+    this.color1 = data.color1
+    this.color2 = data.color2
     this.add.text(this.middleX, 20, 'Game').setOrigin(0.5, 0)
-    this.snake = new Snake(this, 10, 20)
+    this.snake = new Snake(this, 10, 20, { color: this.color1 })
 
     let movements = ['goRight', 'goDown', 'goLeft', 'goUp']
 

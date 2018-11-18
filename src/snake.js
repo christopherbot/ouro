@@ -4,7 +4,7 @@ const LEFT = 2
 const RIGHT = 3
 
 export default new Phaser.Class({
-  initialize(scene, x, y) {
+  initialize(scene, x, y, options) {
     this.scene = scene
     this.headPosition = new Phaser.Geom.Point(x, y)
 
@@ -14,7 +14,7 @@ export default new Phaser.Class({
     this.head
       .setOrigin(0)
       .setScale(0.044) // 10 / 255 (arbitrary num / dimension of body asset)
-      .setTint(0xB4DA55) // TODO pass selected color
+      .setTint(Phaser.Display.Color.HexStringToColor(options.color).color)
 
     this.movesPerSecond = 20
 

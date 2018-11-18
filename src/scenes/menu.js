@@ -119,7 +119,10 @@ export default class Menu extends Phaser.Scene {
 
   handleKeyPress() {
     if (Phaser.Input.Keyboard.JustDown(this.enterKey)) {
-      this.scene.start('game')
+      this.scene.start('game', {
+        color1: this.colors[this.player1ColorIndex],
+        color2: this.colors[this.player2ColorIndex],
+      })
     }
 
     if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
