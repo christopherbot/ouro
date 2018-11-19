@@ -72,7 +72,12 @@ export default class Game extends Phaser.Scene {
 
   update(time) {
     this.handleKeyPress()
-    this.snake1.update(time)
-    this.snake2.update(time)
+    if (this.snake1.update(time)) {
+      this.snake1.eatFood(this.food1)
+    }
+
+    if (this.snake2.update(time)) {
+      this.snake2.eatFood(this.food2)
+    }
   }
 }
