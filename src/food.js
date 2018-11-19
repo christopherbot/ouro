@@ -7,7 +7,6 @@ export default new Phaser.Class({
     this.setTexture('body')
     this.setPosition(x * 10, y * 10)
     this.setOrigin(0)
-    this.setScale(0.044) // 10 / 255 (arbitrary num / dimension of body asset)
     this.setTint(Phaser.Display.Color.HexStringToColor(options.color).color)
     this.setAlpha(0.9)
 

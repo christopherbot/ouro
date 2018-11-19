@@ -16,7 +16,6 @@ export default new Phaser.Class({
     this.head = this.body.create(x * 10, y * 10, 'body')
     this.head
       .setOrigin(0)
-      .setScale(0.044) // 10 / 255 (arbitrary num / dimension of body asset)
       .setTint(Phaser.Display.Color.HexStringToColor(this.color).color)
 
 
@@ -78,7 +77,6 @@ export default new Phaser.Class({
     const newTail = this.body.create(this.tail.x, this.tail.y, 'body')
     newTail
       .setOrigin(0)
-      .setScale(0.044) // 10 / 255 (arbitrary num / dimension of body asset)
       .setTint(Phaser.Display.Color.HexStringToColor(this.color).color)
   },
 
