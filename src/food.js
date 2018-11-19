@@ -11,6 +11,12 @@ export default new Phaser.Class({
     this.setTint(Phaser.Display.Color.HexStringToColor(options.color).color)
     this.setAlpha(0.9)
 
+    this.total = 0
+
     scene.children.add(this)
+  },
+
+  eat(amount = 1) {
+    this.totalFood += amount
   },
 })

@@ -6,7 +6,10 @@ const RIGHT = 3
 export default new Phaser.Class({
   initialize(scene, x, y, options) {
     this.scene = scene
+    this.color = options.color
+
     this.headPosition = new Phaser.Geom.Point(x, y)
+    this.tail = new Phaser.Geom.Point(x, y)
 
     this.body = scene.add.group()
 
@@ -14,19 +17,14 @@ export default new Phaser.Class({
     this.head
       .setOrigin(0)
       .setScale(0.044) // 10 / 255 (arbitrary num / dimension of body asset)
-      .setTint(Phaser.Display.Color.HexStringToColor(options.color).color)
+      .setTint(Phaser.Display.Color.HexStringToColor(this.color).color)
+
 
     this.movesPerSecond = 20
 
     this.nextUpdateTime = 0
 
     this.direction = DOWN
-  },
-
-  update(time) {
-    if (time >= this.nextUpdateTime) {
-      return this.move(time)
-    }
   },
 
   goLeft() {
@@ -69,10 +67,35 @@ export default new Phaser.Class({
         break
     }
 
-    Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x * 10, this.headPosition.y * 10, 1)
+    Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x * 10, this.headPosition.y * 10, 1, this.tail)
 
     this.nextUpdateTime = time + (1000 / this.movesPerSecond)
 
     return true
+  },
+
+  grow(amount = 1) {
+    const newTail = this.body.create(this.tail.x, this.tail.y, 'body')
+    newTail
+      .setOrigin(0)
+      .setScale(0.044) // 10 / 255 (arbitrary num / dimension of body asset)
+      .setTint(Phaser.Display.Color.HexStringToColor(this.color).color)
+  },
+
+  eatFood(food) {
+    if (this.head.x === food.x && this.head.y === food.y) {
+      this.grow()
+      food.eat()
+
+      return true
+    }
+
+    return false
+  },
+
+  update(time) {
+    if (time >= this.nextUpdateTime) {
+      return this.move(time)
+    }
   },
 })
