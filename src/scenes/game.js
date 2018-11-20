@@ -8,23 +8,23 @@ export default class Game extends BaseScene {
   }
 
   handleKeyPress() {
-    if (this.keyD.isDown) {
+    if (this.keyJustDown(this.keyD)) {
       this.snake1.goRight()
-    } else if (this.keyA.isDown) {
+    } else if (this.keyJustDown(this.keyA)) {
       this.snake1.goLeft()
-    } else if (this.keyW.isDown) {
+    } else if (this.keyJustDown(this.keyW)) {
       this.snake1.goUp()
-    } else if (this.keyS.isDown) {
+    } else if (this.keyJustDown(this.keyS)) {
       this.snake1.goDown()
     }
 
-    if (this.cursors.right.isDown) {
+    if (this.keyJustDown(this.cursors.right)) {
       this.snake2.goRight()
-    } else if (this.cursors.left.isDown) {
+    } else if (this.keyJustDown(this.cursors.left)) {
       this.snake2.goLeft()
-    } else if (this.cursors.up.isDown) {
+    } else if (this.keyJustDown(this.cursors.up)) {
       this.snake2.goUp()
-    } else if (this.cursors.down.isDown) {
+    } else if (this.keyJustDown(this.cursors.down)) {
       this.snake2.goDown()
     }
   }
