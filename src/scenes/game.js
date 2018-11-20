@@ -1,6 +1,6 @@
 import BaseScene from './baseScene'
-import Snake from '../snake'
-import Food from '../food'
+import Snake from '../classes/snake'
+import Food from '../classes/food'
 
 export default class Game extends BaseScene {
   constructor() {
