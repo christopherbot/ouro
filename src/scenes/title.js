@@ -27,8 +27,8 @@ export default class Title extends BaseScene {
     ).setOrigin(0.5, 1)
   }
 
-  addSnake() {
-    this.snake = this.add.sprite(this.middleX, this.middleY, 'snake')
+  addSnakeAnimation() {
+    this.snakeAnimation = this.add.sprite(this.middleX, this.middleY, 'snake')
     this.isSnakeMovingUp = true
 
     this.anims.create({
@@ -38,26 +38,26 @@ export default class Title extends BaseScene {
       repeat: -1,
     })
 
-    this.snake.anims.play('snakeDance')
+    this.snakeAnimation.anims.play('snakeDance')
   }
 
   moveSnake(delta) {
-    this.snake.x -= delta / 8
+    this.snakeAnimation.x -= delta / 8
 
-    if (this.snake.x < -16) {
-      this.snake.x = this.gameWidth + 16
+    if (this.snakeAnimation.x < -16) {
+      this.snakeAnimation.x = this.gameWidth + 16
     }
 
     if (this.isSnakeMovingUp) {
-      this.snake.y -= delta / 16
+      this.snakeAnimation.y -= delta / 16
 
-      if (this.snake.y < this.middleY - 30) {
+      if (this.snakeAnimation.y < this.middleY - 30) {
         this.isSnakeMovingUp = false
       }
     } else {
-      this.snake.y += delta / 16
+      this.snakeAnimation.y += delta / 16
 
-      if (this.snake.y > this.middleY + 30) {
+      if (this.snakeAnimation.y > this.middleY + 30) {
         this.isSnakeMovingUp = true
       }
     }
@@ -78,7 +78,7 @@ export default class Title extends BaseScene {
 
     this.addGameTitle()
     this.addMenuPrompt()
-    this.addSnake()
+    this.addSnakeAnimation()
   }
 
   update(time, delta) {
