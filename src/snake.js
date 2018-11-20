@@ -74,8 +74,8 @@ export default new Phaser.Class({
   },
 
   grow(amount = 1) {
-    const newTail = this.body.create(this.tail.x, this.tail.y, 'body')
-    newTail
+    this.body
+      .create(this.tail.x, this.tail.y, 'body')
       .setOrigin(0)
       .setTint(this.color)
   },
