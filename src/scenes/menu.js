@@ -100,14 +100,14 @@ export default class Menu extends BaseScene {
   }
 
   handleKeyPress() {
-    if (Phaser.Input.Keyboard.JustDown(this.enterKey)) {
+    if (this.keyJustDown(this.enterKey)) {
       this.scene.start('game', {
         color1: this.colors[this.player1ColorIndex],
         color2: this.colors[this.player2ColorIndex],
       })
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
+    if (this.keyJustDown(this.keyD)) {
       if (this.player1ColorIndex === this.colors.length - 1) {
         this.player1ColorIndex = 0
         this.cursor1.left -= (30 * (this.colors.length - 1))
@@ -117,7 +117,7 @@ export default class Menu extends BaseScene {
       }
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
+    if (this.keyJustDown(this.keyA)) {
       if (this.player1ColorIndex === 0) {
         this.player1ColorIndex = this.colors.length - 1
         this.cursor1.left += (30 * (this.colors.length - 1))
@@ -127,7 +127,7 @@ export default class Menu extends BaseScene {
       }
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.cursors.right)) {
+    if (this.keyJustDown(this.cursors.right)) {
       if (this.player2ColorIndex === this.colors.length - 1) {
         this.player2ColorIndex = 0
         this.cursor2.left -= (30 * (this.colors.length - 1))
@@ -137,7 +137,7 @@ export default class Menu extends BaseScene {
       }
     }
 
-    if (Phaser.Input.Keyboard.JustDown(this.cursors.left)) {
+    if (this.keyJustDown(this.cursors.left)) {
       if (this.player2ColorIndex === 0) {
         this.player2ColorIndex = this.colors.length - 1
         this.cursor2.left += (30 * (this.colors.length - 1))

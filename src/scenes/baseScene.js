@@ -27,6 +27,10 @@ export default class BaseScene extends Phaser.Scene {
     return this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[key])
   }
 
+  keyJustDown(key) {
+    return Phaser.Input.Keyboard.JustDown(key)
+  }
+
   hexStringToColor(hex) {
     if (!hex.startsWith('#')) {
       console.warn(`[hexStringToColor]: ${hex} is not a valid hex string.`)

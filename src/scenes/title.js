@@ -64,7 +64,7 @@ export default class Title extends BaseScene {
   }
 
   handleKeyPress() {
-    if (Phaser.Input.Keyboard.JustDown(this.enterKey)) {
+    if (this.keyJustDown(this.enterKey)) {
       this.scene.start('menu')
     }
   }
