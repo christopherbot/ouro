@@ -8,7 +8,7 @@ export default new Phaser.Class({
     this.setTexture('body')
     this.setPosition(x * 10, y * 10)
     this.setOrigin(0)
-    this.setTint(Phaser.Display.Color.HexStringToColor(options.color).color)
+    this.setTint(options.color)
     this.setAlpha(0.9)
 
     this.total = 0

@@ -1,22 +1,8 @@
-export default class Menu extends Phaser.Scene {
+import BaseScene from './baseScene'
+
+export default class Menu extends BaseScene {
   constructor() {
     super('menu')
-  }
-
-  get gameWidth() {
-    return this.sys.game.config.width
-  }
-
-  get gameHeight() {
-    return this.sys.game.config.height
-  }
-
-  get middleX() {
-    return this.gameWidth / 2
-  }
-
-  get middleY() {
-    return this.gameHeight / 2
   }
 
   get colors() {
@@ -44,10 +30,6 @@ export default class Menu extends Phaser.Scene {
     }
   }
 
-  addKey(key) {
-    return this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[key])
-  }
-
   addMenuTitle() {
     this.add.text(
       this.middleX,
@@ -59,7 +41,7 @@ export default class Menu extends Phaser.Scene {
 
   createColorBoxes() {
     const colorBoxes = this.colors
-      .map(color => Phaser.Display.Color.HexStringToColor(color).color)
+      .map(this.hexStringToColor)
       .reduce((boxes, color, i) => {
         const box = this.add.rectangle(i * 30 + 142, 29, 20, 20, color).setOrigin(0, 0)
         boxes.push(box)
@@ -184,7 +166,7 @@ export default class Menu extends Phaser.Scene {
     this.addGameInstructions()
     this.addGamePrompt()
 
-    this.cursors = this.input.keyboard.createCursorKeys()
+    this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
     this.keyA = this.addKey('A')
     this.keyS = this.addKey('S')

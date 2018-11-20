@@ -1,29 +1,10 @@
+import BaseScene from './baseScene'
 import Snake from '../snake'
 import Food from '../food'
 
-export default class Game extends Phaser.Scene {
+export default class Game extends BaseScene {
   constructor() {
     super('game')
-  }
-
-  get gameWidth() {
-    return this.sys.game.config.width
-  }
-
-  get gameHeight() {
-    return this.sys.game.config.height
-  }
-
-  get middleX() {
-    return this.gameWidth / 2
-  }
-
-  get middleY() {
-    return this.gameHeight / 2
-  }
-
-  addKey(key) {
-    return this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[key])
   }
 
   handleKeyPress() {
@@ -53,11 +34,11 @@ export default class Game extends Phaser.Scene {
   }
 
   create(data) {
-    this.color1 = data.color1
-    this.color2 = data.color2
+    this.color1 = this.hexStringToColor(data.color1)
+    this.color2 = this.hexStringToColor(data.color2)
     this.add.text(this.middleX, 20, 'Game').setOrigin(0.5, 0)
 
-    this.cursors = this.input.keyboard.createCursorKeys()
+    this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
     this.keyA = this.addKey('A')
     this.keyS = this.addKey('S')

@@ -16,7 +16,7 @@ export default new Phaser.Class({
     this.head = this.body.create(x * 10, y * 10, 'body')
     this.head
       .setOrigin(0)
-      .setTint(Phaser.Display.Color.HexStringToColor(this.color).color)
+      .setTint(this.color)
 
 
     this.movesPerSecond = 20
@@ -77,7 +77,7 @@ export default new Phaser.Class({
     const newTail = this.body.create(this.tail.x, this.tail.y, 'body')
     newTail
       .setOrigin(0)
-      .setTint(Phaser.Display.Color.HexStringToColor(this.color).color)
+      .setTint(this.color)
   },
 
   eatFood(food) {

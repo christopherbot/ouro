@@ -1,26 +1,8 @@
-export default class Title extends Phaser.Scene {
+import BaseScene from './baseScene'
+
+export default class Title extends BaseScene {
   constructor(props) {
     super('title')
-  }
-
-  get gameWidth() {
-    return this.sys.game.config.width
-  }
-
-  get gameHeight() {
-    return this.sys.game.config.height
-  }
-
-  get middleX() {
-    return this.gameWidth / 2
-  }
-
-  get middleY() {
-    return this.gameHeight / 2
-  }
-
-  get gameTitle() {
-    return 'Ouro'
   }
 
   get menuPrompt() {
@@ -92,7 +74,7 @@ export default class Title extends Phaser.Scene {
   }
 
   create() {
-    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
+    this.enterKey = this.addKey('ENTER')
 
     this.addGameTitle()
     this.addMenuPrompt()
