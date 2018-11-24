@@ -4,8 +4,8 @@ import Menu from './scenes/menu'
 import Game from './scenes/game'
 
 const gameConfig = {
-  width: 680,
-  height: 400,
+  width: 720,
+  height: 560,
   // scene: [Title, Menu, Game],
   scene: [Menu, Game], // skip Title for development
 }

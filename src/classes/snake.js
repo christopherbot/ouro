@@ -8,7 +8,7 @@ export default new Phaser.Class({
     this.scene = scene
 
     this.color = options.color
-    this.size = options.size || 10
+    this.size = options.size || 16
     this.scale = this.size / 10 // the `body` asset is 10x10
 
     this.headPosition = new Phaser.Geom.Point(x, y)

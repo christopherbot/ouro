@@ -45,10 +45,10 @@ export default class Game extends BaseScene {
     this.keyD = this.addKey('D')
 
     this.snake1 = new Snake(this, 10, 10, { color: this.color1 })
-    this.snake2 = new Snake(this, 50, 10, { color: this.color2 })
+    this.snake2 = new Snake(this, 30, 10, { color: this.color2 })
 
     this.food1 = new Food(this, 10, 20, { color: this.color1 })
-    this.food2 = new Food(this, 50, 20, { color: this.color2 })
+    this.food2 = new Food(this, 30, 20, { color: this.color2 })
   }
 
   update(time) {
