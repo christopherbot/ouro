@@ -23,7 +23,7 @@ export default new Phaser.Class({
       .setTint(this.color)
 
 
-    this.movesPerSecond = 15
+    this.movesPerSecond = 12
 
     this.nextUpdateTime = 0
 
