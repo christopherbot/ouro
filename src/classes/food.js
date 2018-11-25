@@ -21,12 +21,16 @@ export default new Phaser.Class({
     scene.children.add(this)
   },
 
+  reposition(x, y) {
+    x = x || Phaser.Math.Between(0, (this.scene.gameWidth / this.size) - 1)
+    y = y || Phaser.Math.Between(0, (this.scene.gameHeight / this.size) - 1)
+
+    this.setPosition(x * this.size, y * this.size)
+  },
+
   eat(amount = 1) {
     this.totalFood += amount
 
-    const x = Phaser.Math.Between(0, (this.scene.gameWidth / this.size) - 1)
-    const y = Phaser.Math.Between(0, (this.scene.gameHeight / this.size) - 1)
-
-    this.setPosition(x * this.size, y * this.size)
+    this.reposition()
   },
 })
