@@ -39,11 +39,26 @@ export default class Menu extends BaseScene {
     ).setOrigin(0.5, 0)
   }
 
-  createColorBoxes() {
+  get colorBoxSize() {
+    return 20
+  }
+
+  get colorBoxSpacing() {
+    return 8
+  }
+
+  createColorBoxes(offset) {
     const colorBoxes = this.colors
       .map(this.hexStringToColor)
       .reduce((boxes, color, i) => {
-        const box = this.add.rectangle(i * 30 + 142, 29, 20, 20, color).setOrigin(0, 0)
+        const box = this.add.rectangle(
+          i * 30 + (this.colorBoxSpacing + offset),
+          29,
+          this.colorBoxSize,
+          this.colorBoxSize,
+          color,
+        ).setOrigin(0, 0)
+
         boxes.push(box)
 
         return boxes
@@ -54,31 +69,52 @@ export default class Menu extends BaseScene {
 
   addPlayerSections() {
     this.player1Header = this.add.text(0, 0, this.text.player1)
-    this.player1Container = this.add.container(50, 50, [
+    this.player2Header = this.add.text(0, 0, this.text.player2)
+    this.chooseColor1Text = this.add.text(0, 30, this.text.chooseColor)
+    this.chooseColor2Text = this.add.text(0, 30, this.text.chooseColor)
+
+    const player1Elements = [
       this.player1Header,
-      this.add.text(0, 30, this.text.chooseColor),
-      ...this.createColorBoxes(),
+      this.chooseColor1Text,
+      ...this.createColorBoxes(this.chooseColor1Text.width),
       this.add.image(0, 70, 'WASD').setOrigin(0, 0),
       this.add.text(32, 160, this.text.controls),
-    ])
+    ]
+
+    const player2Elements = [
+      this.player2Header,
+      this.chooseColor2Text,
+      ...this.createColorBoxes(this.chooseColor2Text.width),
+      this.add.image(0, 70, 'arrowKeys').setOrigin(0, 0),
+      this.add.text(32, 160, this.text.controls),
+    ]
+
+    const getContainerWidth = (width, child) => {
+      if (child.x + child.width > width) {
+        width = child.x + child.width
+      }
+
+      return width
+    }
+
+    const container1Width = player1Elements.reduce(getContainerWidth, 0)
+    const container2Width = player2Elements.reduce(getContainerWidth, 0)
+
+    const container1X = (this.middleX - container1Width) * 2 / 3
+    const container2X = this.middleX + (this.middleX - container2Width) / 3
+
+    this.player1Container = this.add.container(container1X, 50, player1Elements)
+    this.player2Container = this.add.container(container2X, 50, player2Elements)
 
     this.cursor1 = new Phaser.Geom.Triangle.BuildEquilateral(
-      this.player1Container.x + 152,
+      this.player1Container.x + this.chooseColor1Text.width + this.colorBoxSpacing + (this.colorBoxSize / 2),
       this.player1Container.y + 55,
       15,
     )
 
-    this.player2Header = this.add.text(0, 0, this.text.player2)
-    this.player2Container = this.add.container(380, 50, [
-      this.player2Header,
-      this.add.text(0, 30, this.text.chooseColor),
-      ...this.createColorBoxes(),
-      this.add.image(0, 70, 'arrowKeys').setOrigin(0, 0),
-      this.add.text(32, 160, this.text.controls),
-    ])
-
     this.cursor2 = new Phaser.Geom.Triangle.BuildEquilateral(
-      this.player2Container.x + 182,
+      // `+ 30` to begin on second color:
+      this.player2Container.x + this.chooseColor2Text.width + this.colorBoxSpacing + (this.colorBoxSize / 2) + 30,
       this.player2Container.y + 55,
       15,
     )
