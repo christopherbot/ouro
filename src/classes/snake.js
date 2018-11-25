@@ -83,6 +83,14 @@ export default new Phaser.Class({
     return true
   },
 
+  overlapsWith(item) {
+    if (!item) {
+      return false
+    }
+
+    return this.head.x === item.x && this.head.y === item.y
+  },
+
   grow(amount = 1) {
     this.body
       .create(this.tail.x, this.tail.y, 'body')
@@ -92,7 +100,7 @@ export default new Phaser.Class({
   },
 
   eatFood(food) {
-    if (this.head.x === food.x && this.head.y === food.y) {
+    if (this.overlapsWith(food)) {
       this.grow()
       food.eat()
 
