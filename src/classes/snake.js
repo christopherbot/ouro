@@ -1,7 +1,7 @@
-const UP = 0
-const DOWN = 1
-const LEFT = 2
-const RIGHT = 3
+const UP = 'UP'
+const DOWN = 'DOWN'
+const LEFT = 'LEFT'
+const RIGHT = 'RIGHT'
 
 export default new Phaser.Class({
   initialize(scene, x, y, options) {
