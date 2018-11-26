@@ -91,23 +91,19 @@ export default new Phaser.Class({
     return this.head.x === item.x && this.head.y === item.y
   },
 
+  handleInteractions(food) {
+    if (this.overlapsWith(food)) {
+      this.grow()
+      food.eat()
+    }
+  },
+
   grow(amount = 1) {
     this.body
       .create(this.tail.x, this.tail.y, 'body')
       .setScale(this.scale)
       .setOrigin(0)
       .setTint(this.color)
-  },
-
-  eatFood(food) {
-    if (this.overlapsWith(food)) {
-      this.grow()
-      food.eat()
-
-      return true
-    }
-
-    return false
   },
 
   update(time) {

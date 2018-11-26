@@ -54,11 +54,11 @@ export default class Game extends BaseScene {
   update(time) {
     this.handleKeyPress()
     if (this.snake1.update(time)) {
-      this.snake1.eatFood(this.food1)
+      this.snake1.handleInteractions(this.food1)
     }
 
     if (this.snake2.update(time)) {
-      this.snake2.eatFood(this.food2)
+      this.snake2.handleInteractions(this.food2)
     }
   }
 }
