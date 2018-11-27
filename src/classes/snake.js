@@ -91,11 +91,52 @@ export default new Phaser.Class({
     return this.head.x === item.x && this.head.y === item.y
   },
 
+  handleOverlapSelf() {
+    const strandedChildren = []
+
+    let removeTheRest = false
+    this.body.children.each((child, index) => {
+      if (index === 0) {
+        return
+      }
+
+      if (removeTheRest) {
+        this.body.remove(child)
+        strandedChildren.push(child)
+      } else if (this.overlapsWith(child)) {
+        removeTheRest = true
+        this.body.remove(child)
+        strandedChildren.push(child)
+      }
+    })
+
+    strandedChildren.forEach((child, index) => {
+      const fadeDuration = 200
+      const delay = index * 20
+
+      this.scene.tweens.add({
+        targets: child,
+        alpha: 0,
+        ease: 'Sine.easeInOut',
+        duration: fadeDuration,
+        delay,
+      })
+
+      this.scene.time.addEvent({
+        delay: fadeDuration + delay,
+        callback: child.destroy,
+        loop: false,
+      })
+    })
+  },
+
   handleInteractions(food) {
     if (this.overlapsWith(food)) {
       this.grow()
       food.eat()
     }
+
+    this.handleOverlapSelf()
   },
 
   grow(amount = 1) {
