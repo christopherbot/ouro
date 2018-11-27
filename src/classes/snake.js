@@ -99,11 +99,13 @@ export default new Phaser.Class({
   },
 
   grow(amount = 1) {
-    this.body
-      .create(this.tail.x, this.tail.y, 'body')
-      .setScale(this.scale)
-      .setOrigin(0)
-      .setTint(this.color)
+    [...Array(amount)].forEach(() => {
+      this.body
+        .create(this.tail.x, this.tail.y, 'body')
+        .setScale(this.scale)
+        .setOrigin(0)
+        .setTint(this.color)
+    })
   },
 
   update(time) {
