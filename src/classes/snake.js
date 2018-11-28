@@ -28,34 +28,35 @@ export default new Phaser.Class({
     this.nextUpdateTime = 0
 
     this.direction = DOWN
+    this.nextDirection = DOWN
   },
 
   goLeft() {
     if (this.direction === UP || this.direction === DOWN) {
-      this.direction = LEFT
+      this.nextDirection = LEFT
     }
   },
 
   goRight() {
     if (this.direction === UP || this.direction === DOWN) {
-      this.direction = RIGHT
+      this.nextDirection = RIGHT
     }
   },
 
   goUp() {
     if (this.direction === LEFT || this.direction === RIGHT) {
-      this.direction = UP
+      this.nextDirection = UP
     }
   },
 
   goDown() {
     if (this.direction === LEFT || this.direction === RIGHT) {
-      this.direction = DOWN
+      this.nextDirection = DOWN
     }
   },
 
   move(time) {
-    switch(this.direction) {
+    switch(this.nextDirection) {
       case UP:
         this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, this.scene.gameHeight / this.size)
         break
@@ -69,6 +70,8 @@ export default new Phaser.Class({
         this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, this.scene.gameWidth / this.size)
         break
     }
+
+    this.direction = this.nextDirection
 
     Phaser.Actions.ShiftPosition(
       this.body.getChildren(),
