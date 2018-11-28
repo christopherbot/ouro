@@ -111,7 +111,7 @@ export default new Phaser.Class({
     })
 
     strandedChildren.forEach((child, index) => {
-      const fadeDuration = 200
+      const fadeDuration = 300
       const delay = index * 20
 
       this.scene.tweens.add({
