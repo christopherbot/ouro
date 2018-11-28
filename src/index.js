@@ -6,8 +6,7 @@ import Game from './scenes/game'
 const gameConfig = {
   width: 720,
   height: 560,
-  // scene: [Title, Menu, Game],
-  scene: [Menu, Game], // skip Title for development
+  scene: [Title, Menu, Game],
 }
 
 const game = new Phaser.Game(gameConfig)
