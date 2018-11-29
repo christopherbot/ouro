@@ -9,6 +9,10 @@ export default class Title extends BaseScene {
     return 'hit [enter]'
   }
 
+  get snakeSpriteHeight() {
+    return this.gameHeight - 70
+  }
+
   addGameTitle() {
     this.add.text(
       this.middleX,
@@ -49,7 +53,7 @@ export default class Title extends BaseScene {
   }
 
   addSnakeAnimation() {
-    this.snakeAnimation = this.add.sprite(this.middleX, this.middleY, 'snake')
+    this.snakeAnimation = this.add.sprite(this.middleX, this.snakeSpriteHeight, 'snake').setScale(1.5)
     this.isSnakeMovingUp = true
 
     this.anims.create({
@@ -63,22 +67,18 @@ export default class Title extends BaseScene {
   }
 
   moveSnake(delta) {
-    this.snakeAnimation.x -= delta / 8
-
-    if (this.snakeAnimation.x < -16) {
-      this.snakeAnimation.x = this.gameWidth + 16
-    }
+    this.snakeAnimation.x = Phaser.Math.Wrap(this.snakeAnimation.x - delta / 8, -45, this.gameWidth + 45)
 
     if (this.isSnakeMovingUp) {
       this.snakeAnimation.y -= delta / 16
 
-      if (this.snakeAnimation.y < this.middleY - 30) {
+      if (this.snakeAnimation.y < this.snakeSpriteHeight - 30) {
         this.isSnakeMovingUp = false
       }
     } else {
       this.snakeAnimation.y += delta / 16
 
-      if (this.snakeAnimation.y > this.middleY + 30) {
+      if (this.snakeAnimation.y > this.snakeSpriteHeight + 30) {
         this.isSnakeMovingUp = true
       }
     }
@@ -91,7 +91,7 @@ export default class Title extends BaseScene {
   }
 
   preload() {
-    this.load.spritesheet('snake', 'assets/snake.png', { frameWidth: 32, frameHeight: 32 })
+    this.load.spritesheet('snake', 'assets/snakeSprite.png', { frameWidth: 56, frameHeight: 14 })
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
   }
 
