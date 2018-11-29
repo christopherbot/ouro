@@ -5,26 +5,47 @@ export default class Title extends BaseScene {
     super('title')
   }
 
-  get menuPrompt() {
-    return 'Press [Enter]'
+  get menuPromptText() {
+    return 'hit [enter]'
   }
 
   addGameTitle() {
     this.add.text(
       this.middleX,
-      this.middleY + 100,
-      this.gameTitle,
-      { fill: '#0F0' }
-    ).setOrigin(0.5, 1)
+      this.middleY - 25,
+      this.gameTitle.toUpperCase(),
+      {
+        ...this.textStyles,
+        fontSize: '175px',
+        padding: 10,
+      }
+    )
+      .setOrigin(0.5, 0.5)
+      .setShadow(2, 2, '#FFF', 20, true, true)
   }
 
   addMenuPrompt() {
-    this.add.text(
+    this.menuPrompt = this.add.text(
       this.middleX,
       this.middleY + 130,
-      this.menuPrompt,
-      { fill: '#0F0' }
-    ).setOrigin(0.5, 1)
+      this.menuPromptText,
+      {
+        ...this.textStyles,
+        fontSize: '35px',
+        padding: 10,
+      },
+    )
+      .setOrigin(0.5, 1)
+      .setShadow(1, 1, '#FFF', 1, true, true)
+
+    this.graphics = this.add.graphics({ lineStyle: { color: 0x979797, width: 2 } })
+    this.graphics.strokeRoundedRect(
+      this.menuPrompt.x - this.menuPrompt.width * 1.5 / 2,
+      this.menuPrompt.y - this.menuPrompt.height,
+      this.menuPrompt.width * 1.5,
+      this.menuPrompt.height,
+      5, // border radius
+    )
   }
 
   addSnakeAnimation() {
@@ -71,13 +92,24 @@ export default class Title extends BaseScene {
 
   preload() {
     this.load.spritesheet('snake', 'assets/snake.png', { frameWidth: 32, frameHeight: 32 })
+    this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
+  }
+
+  addText() {
+    this.addGameTitle()
+    this.addMenuPrompt()
   }
 
   create() {
+    WebFont.load({
+      google: {
+        families: ['Cabin']
+      },
+      active: this.addText.bind(this),
+    })
+
     this.enterKey = this.addKey('ENTER')
 
-    this.addGameTitle()
-    this.addMenuPrompt()
     this.addSnakeAnimation()
   }
 

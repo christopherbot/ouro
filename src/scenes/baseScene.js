@@ -19,6 +19,13 @@ export default class BaseScene extends Phaser.Scene {
     return this.gameHeight / 2
   }
 
+  get textStyles() {
+    return {
+      fontFamily: 'Cabin',
+      color: '#F6FEFF',
+    }
+  }
+
   createCursorKeys() {
     return this.input.keyboard.createCursorKeys()
   }
