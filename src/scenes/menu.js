@@ -115,8 +115,8 @@ export default class Menu extends BaseScene {
     const container1X = (this.middleX - container1Width) * 2 / 3
     const container2X = this.middleX + (this.middleX - container2Width) / 3
 
-    this.player1Container = this.add.container(container1X, 50, player1Elements)
-    this.player2Container = this.add.container(container2X, 50, player2Elements)
+    this.player1Container = this.add.container(container1X, 100, player1Elements)
+    this.player2Container = this.add.container(container2X, 100, player2Elements)
 
     this.cursor1 = new Phaser.Geom.Triangle.BuildEquilateral(
       this.player1Container.x + this.chooseColor1Text.width + this.colorBoxSpacing + (this.colorBoxSize / 2),
@@ -137,14 +137,14 @@ export default class Menu extends BaseScene {
   }
 
   addGameInstructions() {
-    this.add.text(this.middleX, 300, this.text.gameInstructionsHeader, this.menuTextStyles).setOrigin(0.5, 0)
+    this.add.text(this.middleX, 350, this.text.gameInstructionsHeader, this.menuTextStyles).setOrigin(0.5, 0)
     this.text.instructions.forEach((instruction, i) =>
-      this.add.text(this.middleX, i * 20 + 340, instruction, this.menuTextStyles).setOrigin(0.5, 0),
+      this.add.text(this.middleX, i * 20 + 390, instruction, this.menuTextStyles).setOrigin(0.5, 0),
     )
   }
 
   addGamePrompt() {
-    this.gamePrompt = this.add.text(this.middleX, 400, this.text.gamePrompt, {
+    this.gamePrompt = this.add.text(this.middleX, 470, this.text.gamePrompt, {
       ...this.menuTextStyles,
       padding: 10,
     })
