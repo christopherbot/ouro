@@ -16,7 +16,6 @@ export default class Menu extends BaseScene {
 
   get text() {
     return {
-      menuTitle: 'Ouro',
       player1: 'Player 1',
       player2: 'Player 2',
       chooseColor: 'Choose Colour:',
@@ -33,10 +32,16 @@ export default class Menu extends BaseScene {
   addMenuTitle() {
     this.add.text(
       this.middleX,
-      20,
-      this.text.menuTitle,
-      { fill: '#0F0' },
-    ).setOrigin(0.5, 0)
+      0,
+      this.gameTitle.toUpperCase(),
+      {
+        ...this.textStyles,
+        fontSize: '40px',
+        padding: 10,
+      },
+    )
+      .setOrigin(0.5, 0)
+      .setShadow(1, 1, '#FFF', 10, true, true)
   }
 
   get colorBoxSize() {
