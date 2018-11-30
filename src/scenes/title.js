@@ -16,7 +16,7 @@ export default class Title extends BaseScene {
   addGameTitle() {
     this.add.text(
       this.middleX,
-      this.middleY - 25,
+      this.middleY - 50,
       this.gameTitle.toUpperCase(),
       {
         ...this.textStyles,
@@ -31,7 +31,7 @@ export default class Title extends BaseScene {
   addMenuPrompt() {
     this.menuPrompt = this.add.text(
       this.middleX,
-      this.middleY + 130,
+      this.middleY + 75,
       this.menuPromptText,
       {
         ...this.textStyles,
@@ -39,13 +39,13 @@ export default class Title extends BaseScene {
         padding: 10,
       },
     )
-      .setOrigin(0.5, 1)
+      .setOrigin(0.5, 0)
       .setShadow(1, 1, '#FFF', 1, true, true)
 
     this.graphics = this.add.graphics({ lineStyle: { color: 0x979797, width: 2 } })
     this.graphics.strokeRoundedRect(
       this.menuPrompt.x - this.menuPrompt.width * 1.5 / 2,
-      this.menuPrompt.y - this.menuPrompt.height,
+      this.menuPrompt.y,
       this.menuPrompt.width * 1.5,
       this.menuPrompt.height,
       5, // border radius
@@ -101,19 +101,27 @@ export default class Title extends BaseScene {
   }
 
   create() {
+    this.loading = true
+
     WebFont.load({
       google: {
         families: ['Cabin']
       },
-      active: this.addText.bind(this),
+      active: () => {
+        this.loading = false
+        this.addText()
+        this.addSnakeAnimation()
+      },
     })
 
     this.enterKey = this.addKey('ENTER')
-
-    this.addSnakeAnimation()
   }
 
   update(time, delta) {
+    if (this.loading) {
+      return
+    }
+
     this.moveSnake(delta)
     this.handleKeyPress()
   }

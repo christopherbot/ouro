@@ -23,10 +23,10 @@ export default class Menu extends BaseScene {
       controls: 'Controls',
       gameInstructionsHeader: 'Game Instructions',
       instructions: [
-        '- Player score + 1 when opponent fails to return ball',
+        '- Player score +1 when opponent fails to return ball',
         '- Player loses when snake touches a wall',
       ],
-      gamePrompt: '[Hit Enter]'
+      gamePrompt: 'hit [enter]'
     }
   }
 
@@ -45,6 +45,13 @@ export default class Menu extends BaseScene {
 
   get colorBoxSpacing() {
     return 8
+  }
+
+  get menuTextStyles() {
+    return {
+      ...this.textStyles2,
+      fontSize: '12px',
+    }
   }
 
   createColorBoxes(offset) {
@@ -68,17 +75,17 @@ export default class Menu extends BaseScene {
   }
 
   addPlayerSections() {
-    this.player1Header = this.add.text(0, 0, this.text.player1)
-    this.player2Header = this.add.text(0, 0, this.text.player2)
-    this.chooseColor1Text = this.add.text(0, 30, this.text.chooseColor)
-    this.chooseColor2Text = this.add.text(0, 30, this.text.chooseColor)
+    this.player1Header = this.add.text(0, 0, this.text.player1, this.textStyles2)
+    this.player2Header = this.add.text(0, 0, this.text.player2, this.textStyles2)
+    this.chooseColor1Text = this.add.text(0, 30, this.text.chooseColor, this.menuTextStyles)
+    this.chooseColor2Text = this.add.text(0, 30, this.text.chooseColor, this.menuTextStyles)
 
     const player1Elements = [
       this.player1Header,
       this.chooseColor1Text,
       ...this.createColorBoxes(this.chooseColor1Text.width),
       this.add.image(0, 70, 'WASD').setOrigin(0, 0),
-      this.add.text(32, 160, this.text.controls),
+      this.add.text(22, 160, this.text.controls, this.menuTextStyles),
     ]
 
     const player2Elements = [
@@ -86,7 +93,7 @@ export default class Menu extends BaseScene {
       this.chooseColor2Text,
       ...this.createColorBoxes(this.chooseColor2Text.width),
       this.add.image(0, 70, 'arrowKeys').setOrigin(0, 0),
-      this.add.text(32, 160, this.text.controls),
+      this.add.text(22, 160, this.text.controls, this.menuTextStyles),
     ]
 
     const getContainerWidth = (width, child) => {
@@ -119,20 +126,33 @@ export default class Menu extends BaseScene {
       15,
     )
 
-    this.graphics = this.add.graphics({ fillStyle: { color: 0xFFFFFF } })
-    this.graphics.fillTriangleShape(this.cursor1)
-    this.graphics.fillTriangleShape(this.cursor2)
+    this.cursorGraphics = this.add.graphics({ fillStyle: { color: 0xFFFFFF } })
+    this.cursorGraphics.fillTriangleShape(this.cursor1)
+    this.cursorGraphics.fillTriangleShape(this.cursor2)
   }
 
   addGameInstructions() {
-    this.add.text(this.middleX, 260, this.text.gameInstructionsHeader).setOrigin(0.5, 0)
+    this.add.text(this.middleX, 300, this.text.gameInstructionsHeader, this.menuTextStyles).setOrigin(0.5, 0)
     this.text.instructions.forEach((instruction, i) =>
-      this.add.text(this.middleX, i * 20 + 300, instruction).setOrigin(0.5, 0),
+      this.add.text(this.middleX, i * 20 + 340, instruction, this.menuTextStyles).setOrigin(0.5, 0),
     )
   }
 
   addGamePrompt() {
-    this.add.text(this.middleX, 360, this.text.gamePrompt).setOrigin(0.5, 0)
+    this.gamePrompt = this.add.text(this.middleX, 400, this.text.gamePrompt, {
+      ...this.menuTextStyles,
+      padding: 10,
+    })
+      .setOrigin(0.5, 0)
+
+    this.gamePromptGraphics = this.add.graphics({ lineStyle: { color: 0x979797, width: 2 } })
+    this.gamePromptGraphics.strokeRoundedRect(
+      this.gamePrompt.x - this.gamePrompt.width * 1.5 / 2,
+      this.gamePrompt.y,
+      this.gamePrompt.width * 1.5,
+      this.gamePrompt.height,
+      5, // border radius
+    )
   }
 
   handleKeyPress() {
@@ -182,25 +202,42 @@ export default class Menu extends BaseScene {
         this.cursor2.left -= 30
       }
     }
+  }
 
+  changePlayerHeaderFills() {
     this.player1Header.setFill(`${this.colors[this.player1ColorIndex]}`)
     this.player2Header.setFill(`${this.colors[this.player2ColorIndex]}`)
 
-    this.graphics.clear()
-    this.graphics.fillTriangleShape(this.cursor1)
-    this.graphics.fillTriangleShape(this.cursor2)
+    this.cursorGraphics.clear()
+    this.cursorGraphics.fillTriangleShape(this.cursor1)
+    this.cursorGraphics.fillTriangleShape(this.cursor2)
+  }
+
+  _create() {
+    this.addMenuTitle()
+    this.addPlayerSections()
+    this.addGameInstructions()
+    this.addGamePrompt()
   }
 
   preload() {
+    this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
     this.load.image('WASD', 'assets/WASD.png')
     this.load.image('arrowKeys', 'assets/arrowKeys.png')
   }
 
   create() {
-    this.addMenuTitle()
-    this.addPlayerSections()
-    this.addGameInstructions()
-    this.addGamePrompt()
+    this.loading = true
+
+    WebFont.load({
+      google: {
+        families: ['Press Start 2P']
+      },
+      active: () => {
+        this.loading = false
+        this._create()
+      },
+    })
 
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
@@ -214,6 +251,11 @@ export default class Menu extends BaseScene {
   }
 
   update() {
+    if (this.loading) {
+      return
+    }
+
     this.handleKeyPress()
+    this.changePlayerHeaderFills()
   }
 }

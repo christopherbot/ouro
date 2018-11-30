@@ -26,6 +26,13 @@ export default class BaseScene extends Phaser.Scene {
     }
   }
 
+  get textStyles2() {
+    return {
+      fontFamily: "'Press Start 2P'", // See `docs/notes.md` for why this is wrapped in 2 quotes
+      color: '#32EEF8',
+    }
+  }
+
   createCursorKeys() {
     return this.input.keyboard.createCursorKeys()
   }
