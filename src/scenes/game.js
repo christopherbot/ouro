@@ -36,7 +36,7 @@ export default class Game extends BaseScene {
   create(data) {
     this.color1 = this.hexStringToColor(data.color1)
     this.color2 = this.hexStringToColor(data.color2)
-    this.add.text(this.middleX, 20, 'Game').setOrigin(0.5, 0)
+    this.addSmallGameTitle()
 
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')

@@ -29,21 +29,6 @@ export default class Menu extends BaseScene {
     }
   }
 
-  addMenuTitle() {
-    this.add.text(
-      this.middleX,
-      0,
-      this.gameTitle.toUpperCase(),
-      {
-        ...this.textStyles,
-        fontSize: '40px',
-        padding: 10,
-      },
-    )
-      .setOrigin(0.5, 0)
-      .setShadow(1, 1, '#FFF', 10, true, true)
-  }
-
   get colorBoxSize() {
     return 20
   }
@@ -219,7 +204,7 @@ export default class Menu extends BaseScene {
   }
 
   _create() {
-    this.addMenuTitle()
+    this.addSmallGameTitle()
     this.addPlayerSections()
     this.addGameInstructions()
     this.addGamePrompt()

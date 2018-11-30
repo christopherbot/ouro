@@ -33,6 +33,21 @@ export default class BaseScene extends Phaser.Scene {
     }
   }
 
+  addSmallGameTitle() {
+    this.add.text(
+      this.middleX,
+      0,
+      this.gameTitle.toUpperCase(),
+      {
+        ...this.textStyles,
+        fontSize: '40px',
+        padding: 10,
+      },
+    )
+      .setOrigin(0.5, 0)
+      .setShadow(1, 1, '#FFF', 10, true, true)
+  }
+
   createCursorKeys() {
     return this.input.keyboard.createCursorKeys()
   }
