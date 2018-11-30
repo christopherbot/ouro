@@ -152,9 +152,9 @@ export default class Menu extends BaseScene {
 
     this.gamePromptGraphics = this.add.graphics({ lineStyle: { color: 0x979797, width: 2 } })
     this.gamePromptGraphics.strokeRoundedRect(
-      this.gamePrompt.x - this.gamePrompt.width * 1.5 / 2,
+      this.gamePrompt.x - this.gamePrompt.width * 1.25 / 2,
       this.gamePrompt.y,
-      this.gamePrompt.width * 1.5,
+      this.gamePrompt.width * 1.25,
       this.gamePrompt.height,
       5, // border radius
     )

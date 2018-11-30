@@ -34,8 +34,8 @@ export default class Title extends BaseScene {
       this.middleY + 75,
       this.menuPromptText,
       {
-        ...this.textStyles,
-        fontSize: '35px',
+        ...this.textStyles2,
+        fontSize: '20px',
         padding: 10,
       },
     )
@@ -44,9 +44,9 @@ export default class Title extends BaseScene {
 
     this.graphics = this.add.graphics({ lineStyle: { color: 0x979797, width: 2 } })
     this.graphics.strokeRoundedRect(
-      this.menuPrompt.x - this.menuPrompt.width * 1.5 / 2,
+      this.menuPrompt.x - this.menuPrompt.width * 1.25 / 2,
       this.menuPrompt.y,
-      this.menuPrompt.width * 1.5,
+      this.menuPrompt.width * 1.25,
       this.menuPrompt.height,
       5, // border radius
     )
@@ -105,7 +105,7 @@ export default class Title extends BaseScene {
 
     WebFont.load({
       google: {
-        families: ['Cabin']
+        families: ['Cabin', 'Press Start 2P']
       },
       active: () => {
         this.loading = false
