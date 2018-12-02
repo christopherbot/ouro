@@ -203,31 +203,16 @@ export default class Menu extends BaseScene {
     this.cursorGraphics.fillTriangleShape(this.cursor2)
   }
 
-  _create() {
-    this.addSmallGameTitle()
-    this.addPlayerSections()
-    this.addGameInstructions()
-    this.addGamePrompt()
-  }
-
   preload() {
-    this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
     this.load.image('WASD', 'assets/WASD.png')
     this.load.image('arrowKeys', 'assets/arrowKeys.png')
   }
 
   create() {
-    this.loading = true
-
-    WebFont.load({
-      google: {
-        families: ['Press Start 2P']
-      },
-      active: () => {
-        this.loading = false
-        this._create()
-      },
-    })
+    this.addSmallGameTitle()
+    this.addPlayerSections()
+    this.addGameInstructions()
+    this.addGamePrompt()
 
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
@@ -241,10 +226,6 @@ export default class Menu extends BaseScene {
   }
 
   update() {
-    if (this.loading) {
-      return
-    }
-
     this.handleKeyPress()
     this.changePlayerHeaderFills()
   }
