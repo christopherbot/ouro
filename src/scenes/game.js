@@ -29,6 +29,15 @@ export default class Game extends BaseScene {
     }
   }
 
+  addCourtBoundaries() {
+    const horizontalLine = new Phaser.Geom.Line(0, this.courtTop, this.gameWidth, this.courtTop)
+    const verticalLine = new Phaser.Geom.Line(this.middleX, this.courtTop, this.middleX, this.gameHeight)
+
+    const lineGraphics = this.add.graphics({ lineStyle: { color: 0xFFFFFF } })
+    lineGraphics.strokeLineShape(horizontalLine)
+    lineGraphics.strokeLineShape(verticalLine)
+  }
+
   handleKeyPress() {
     if (this.keyJustDown(this.keyD)) {
       this.snake1.goRight()
@@ -59,6 +68,7 @@ export default class Game extends BaseScene {
     this.color1 = this.hexStringToColor(data.color1)
     this.color2 = this.hexStringToColor(data.color2)
     this.addSmallGameTitle()
+    this.addCourtBoundaries()
 
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
