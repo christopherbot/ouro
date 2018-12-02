@@ -40,6 +40,57 @@ export default class Game extends BaseScene {
     lineGraphics.strokeLineShape(verticalLine)
   }
 
+  initScores() {
+    this.score1Display = this.add.text(this.middleX - 35, this.middleY + (this.courtTop / 2), this.score1, {
+      ...this.textStyles2,
+      fontSize: '40px',
+    }).setOrigin(0.5, 0.5)
+
+    this.score2Display = this.add.text(this.middleX + 40, this.middleY + (this.courtTop / 2), this.score2, {
+      ...this.textStyles2,
+      fontSize: '40px',
+    }).setOrigin(0.5, 0.5)
+  }
+
+  updateScore1() {
+    this.score1 += 1
+
+    if (!this.isScore1DoubleDigits && this.score1.toString().length > 1) {
+      this.isScore1DoubleDigits = true
+      this.score1Display.x -= 15
+    }
+
+    if (!this.isScore1TripleDigits && this.score1.toString().length > 2) {
+      this.isScore1TripleDigits = true
+      this.score1Display.x -= 20
+    }
+
+    this.score1Display.setText(this.score1)
+  }
+
+  updateScore2() {
+    this.score2 += 1
+
+    if (!this.isScore2DoubleDigits && this.score2.toString().length > 1) {
+      this.isScore2DoubleDigits = true
+      this.score2Display.x += 15
+    }
+
+    if (!this.isScore2TripleDigits && this.score2.toString().length > 2) {
+      this.isScore2TripleDigits = true
+      this.score2Display.x += 20
+    }
+
+    this.score2Display.setText(this.score2)
+  }
+
+  resetBall(directionInteger) {
+    this.ball.setVelocity(0)
+    this.ball.x = this.middleX
+    this.ball.y = this.middleY + (this.courtTop / 2)
+    setTimeout(() => this.ball.setVelocity(directionInteger * 150, 150), 1000)
+  }
+
   handleKeyPress() {
     if (this.keyJustDown(this.keyD)) {
       this.snake1.goRight()
@@ -64,6 +115,14 @@ export default class Game extends BaseScene {
 
   preload() {
     this.load.image('body', 'assets/body.png')
+
+    this.score1 = 0
+    this.score2 = 0
+    this.isScore1DoubleDigits = false
+    this.isScore2DoubleDigits = false
+    this.isScore1TripleDigits = false
+    this.isScore2TripleDigits = false
+    // Oh man I hope no one is playing into quadruple digits...
   }
 
   hitBall(snake, ball, snakeBody) {
@@ -73,11 +132,12 @@ export default class Game extends BaseScene {
 
   create(data) {
     this.physics.world.setBounds(0, this.courtTop, this.gameWidth, this.gameHeight - this.courtTop)
-    this.physics.world.setBoundsCollision(true, true, true, true)
+    this.physics.world.setBoundsCollision(false, false, true, true)
     this.color1 = this.hexStringToColor(data.color1)
     this.color2 = this.hexStringToColor(data.color2)
     this.addSmallGameTitle()
     this.addCourtBoundaries()
+    this.initScores()
 
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
@@ -123,6 +183,16 @@ export default class Game extends BaseScene {
 
     if (this.snake2.update(time)) {
       this.snake2.handleInteractions(this.food2)
+    }
+
+    if (this.ball.x < 0) {
+      this.updateScore2()
+      this.resetBall(1)
+    }
+
+    if (this.ball.x > this.gameWidth) {
+      this.updateScore1()
+      this.resetBall(-1)
     }
   }
 }
