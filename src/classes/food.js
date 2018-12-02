@@ -30,7 +30,7 @@ export default new Phaser.Class({
   },
 
   eat(amount = 1) {
-    this.totalFood += amount
+    this.total += amount
 
     this.reposition()
   },
