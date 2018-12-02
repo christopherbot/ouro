@@ -4,7 +4,7 @@ import Menu from './scenes/menu'
 import Game from './scenes/game'
 
 const gameConfig = {
-  width: 720,
+  width: 800,
   height: 560,
   backgroundColor: '#072C40',
   scene: [Title, Menu, Game],

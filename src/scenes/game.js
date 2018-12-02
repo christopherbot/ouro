@@ -7,6 +7,28 @@ export default class Game extends BaseScene {
     super('game')
   }
 
+  get courtTop() {
+    return 64
+  }
+
+  get player1Bounds() {
+    return {
+      top: this.courtTop,
+      right: this.gameWidth / 2,
+      bottom: this.gameHeight,
+      left: 0,
+    }
+  }
+
+  get player2Bounds() {
+    return {
+      top: this.courtTop,
+      right: this.gameWidth,
+      bottom: this.gameHeight,
+      left: this.gameWidth / 2,
+    }
+  }
+
   handleKeyPress() {
     if (this.keyJustDown(this.keyD)) {
       this.snake1.goRight()
@@ -44,11 +66,25 @@ export default class Game extends BaseScene {
     this.keyS = this.addKey('S')
     this.keyD = this.addKey('D')
 
-    this.snake1 = new Snake(this, 10, 10, { color: this.color1 })
-    this.snake2 = new Snake(this, 30, 10, { color: this.color2 })
+    this.snake1 = new Snake(this, 10, 10, {
+      color: this.color1,
+      bounds: this.player1Bounds,
+    })
 
-    this.food1 = new Food(this, 10, 20, { color: this.color1 })
-    this.food2 = new Food(this, 30, 20, { color: this.color2 })
+    this.snake2 = new Snake(this, 30, 10, {
+      color: this.color2,
+      bounds: this.player2Bounds,
+    })
+
+    this.food1 = new Food(this, 10, 20, {
+      color: this.color1,
+      bounds: this.player1Bounds,
+    })
+
+    this.food2 = new Food(this, 30, 20, {
+      color: this.color2,
+      bounds: this.player2Bounds,
+    })
   }
 
   update(time) {

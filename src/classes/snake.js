@@ -8,6 +8,7 @@ export default new Phaser.Class({
     this.scene = scene
 
     this.color = options.color
+    this.bounds = options.bounds
     this.size = options.size || 16
     this.scale = this.size / 10 // the `body` asset is 10x10
 
@@ -55,19 +56,27 @@ export default new Phaser.Class({
     }
   },
 
+  wrapVerticalPosition(y) {
+    return Phaser.Math.Wrap(y, this.bounds.top / this.size, this.bounds.bottom / this.size)
+  },
+
+  wrapHorizontalPosition(x) {
+    return Phaser.Math.Wrap(x, this.bounds.left / this.size, this.bounds.right / this.size)
+  },
+
   move(time) {
     switch(this.nextDirection) {
       case UP:
-        this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, this.scene.gameHeight / this.size)
+        this.headPosition.y = this.wrapVerticalPosition(this.headPosition.y - 1)
         break
       case DOWN:
-        this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, this.scene.gameHeight / this.size)
+        this.headPosition.y = this.wrapVerticalPosition(this.headPosition.y + 1)
         break
       case LEFT:
-        this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, this.scene.gameWidth / this.size)
+        this.headPosition.x = this.wrapHorizontalPosition(this.headPosition.x - 1)
         break
       case RIGHT:
-        this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, this.scene.gameWidth / this.size)
+        this.headPosition.x = this.wrapHorizontalPosition(this.headPosition.x + 1)
         break
     }
 
