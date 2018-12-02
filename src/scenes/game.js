@@ -30,11 +30,13 @@ export default class Game extends BaseScene {
   }
 
   addCourtBoundaries() {
-    const horizontalLine = new Phaser.Geom.Line(0, this.courtTop, this.gameWidth, this.courtTop)
-    const verticalLine = new Phaser.Geom.Line(this.middleX, this.courtTop, this.middleX, this.gameHeight)
+    const horizontalLine1 = new Phaser.Geom.Line(0, this.courtTop, this.gameWidth, this.courtTop)
+    const horizontalLine2 = new Phaser.Geom.Line(0, this.gameHeight - 1, this.gameWidth, this.gameHeight - 1)
+    const verticalLine = new Phaser.Geom.Line(this.middleX, this.courtTop + 1, this.middleX, this.gameHeight - 2)
 
     const lineGraphics = this.add.graphics({ lineStyle: { color: 0xFFFFFF } })
-    lineGraphics.strokeLineShape(horizontalLine)
+    lineGraphics.strokeLineShape(horizontalLine1)
+    lineGraphics.strokeLineShape(horizontalLine2)
     lineGraphics.strokeLineShape(verticalLine)
   }
 
