@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot --open",
-    "build": "webpack"
+    "build": "webpack",
+    "build-gh-pages": "webpack && rm -rf assets && cp -r ./build/* ./"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
