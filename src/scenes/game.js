@@ -14,7 +14,7 @@ export default class Game extends BaseScene {
   get player1Bounds() {
     return {
       top: this.courtTop,
-      right: this.gameWidth / 2,
+      right: this.middleX,
       bottom: this.gameHeight,
       left: 0,
     }
@@ -25,7 +25,7 @@ export default class Game extends BaseScene {
       top: this.courtTop,
       right: this.gameWidth,
       bottom: this.gameHeight,
-      left: this.gameWidth / 2,
+      left: this.middleX,
     }
   }
 
