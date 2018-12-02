@@ -23,7 +23,7 @@ export default class Menu extends BaseScene {
       gameInstructionsHeader: 'Game Instructions',
       instructions: [
         '- Player score +1 when opponent fails to return ball',
-        '- Player loses when snake touches a wall',
+        // '- Player loses when snake touches a wall',
       ],
       gamePrompt: 'hit [enter]'
     }
