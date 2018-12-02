@@ -15,7 +15,7 @@ export default new Phaser.Class({
     this.headPosition = new Phaser.Geom.Point(x, y)
     this.tail = new Phaser.Geom.Point(x, y)
 
-    this.body = scene.add.group()
+    this.body = scene.physics.add.group({ immovable: true })
 
     this.head = this.body.create(x * this.size, y * this.size, 'body')
     this.head

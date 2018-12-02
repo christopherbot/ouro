@@ -66,7 +66,14 @@ export default class Game extends BaseScene {
     this.load.image('body', 'assets/body.png')
   }
 
+  hitBall(snake, ball, snakeBody) {
+    snakeBody.setTint(0xFFFFFF)
+    setTimeout(() => snakeBody.setTint(snake.color), 100)
+  }
+
   create(data) {
+    this.physics.world.setBounds(0, this.courtTop, this.gameWidth, this.gameHeight - this.courtTop)
+    this.physics.world.setBoundsCollision(true, true, true, true)
     this.color1 = this.hexStringToColor(data.color1)
     this.color2 = this.hexStringToColor(data.color2)
     this.addSmallGameTitle()
@@ -97,6 +104,15 @@ export default class Game extends BaseScene {
       color: this.color2,
       bounds: this.player2Bounds,
     })
+
+    this.ball = this.physics.add.image(400, 200, 'body')
+      .setCollideWorldBounds(true)
+      .setScale(1.6)
+      .setBounce(1)
+      .setVelocity(150, 150)
+
+    this.physics.add.collider(this.ball, this.snake1.body, this.hitBall.bind(this, this.snake1), null, this)
+    this.physics.add.collider(this.ball, this.snake2.body, this.hitBall.bind(this, this.snake2), null, this)
   }
 
   update(time) {

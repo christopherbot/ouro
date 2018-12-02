@@ -7,6 +7,9 @@ const gameConfig = {
   width: 800,
   height: 560,
   backgroundColor: '#072C40',
+  physics: {
+    default: 'arcade'
+  },
   scene: [Title, Menu, Game],
 }
 
