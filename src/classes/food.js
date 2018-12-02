@@ -1,7 +1,6 @@
-export default new Phaser.Class({
-  Extends: Phaser.GameObjects.Image,
-
-  initialize(scene, x, y, options) {
+export default class Food extends Phaser.GameObjects.Image {
+  constructor(scene, x, y, options) {
+    super(scene, x, y)
     this.scene = scene
     Phaser.GameObjects.Image.call(this, scene)
 
@@ -20,18 +19,18 @@ export default new Phaser.Class({
     this.total = 0
 
     scene.children.add(this)
-  },
+  }
 
   reposition(x, y) {
     x = x || Phaser.Math.Between(this.bounds.left / this.size, (this.bounds.right / this.size) - 1)
     y = y || Phaser.Math.Between(this.bounds.top / this.size, (this.bounds.bottom / this.size) - 1)
 
     this.setPosition(x * this.size, y * this.size)
-  },
+  }
 
   eat(amount = 1) {
     this.total += amount
 
     this.reposition()
-  },
-})
+  }
+}
