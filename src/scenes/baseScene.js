@@ -33,10 +33,10 @@ export default class BaseScene extends Phaser.Scene {
     }
   }
 
-  addSmallGameTitle() {
+  addSmallGameTitle(x, y) {
     this.add.text(
-      this.middleX,
-      0,
+      x || this.middleX,
+      y || 0,
       this.gameTitle.toUpperCase(),
       {
         ...this.textStyles,
