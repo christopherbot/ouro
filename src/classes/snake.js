@@ -3,8 +3,8 @@ const DOWN = 'DOWN'
 const LEFT = 'LEFT'
 const RIGHT = 'RIGHT'
 
-export default new Phaser.Class({
-  initialize(scene, x, y, options) {
+export default class Snake {
+  constructor(scene, x, y, options) {
     this.scene = scene
 
     this.color = options.color
@@ -30,39 +30,39 @@ export default new Phaser.Class({
 
     this.direction = DOWN
     this.nextDirection = DOWN
-  },
+  }
 
   goLeft() {
     if (this.direction === UP || this.direction === DOWN) {
       this.nextDirection = LEFT
     }
-  },
+  }
 
   goRight() {
     if (this.direction === UP || this.direction === DOWN) {
       this.nextDirection = RIGHT
     }
-  },
+  }
 
   goUp() {
     if (this.direction === LEFT || this.direction === RIGHT) {
       this.nextDirection = UP
     }
-  },
+  }
 
   goDown() {
     if (this.direction === LEFT || this.direction === RIGHT) {
       this.nextDirection = DOWN
     }
-  },
+  }
 
   wrapVerticalPosition(y) {
     return Phaser.Math.Wrap(y, this.bounds.top / this.size, this.bounds.bottom / this.size)
-  },
+  }
 
   wrapHorizontalPosition(x) {
     return Phaser.Math.Wrap(x, this.bounds.left / this.size, this.bounds.right / this.size)
-  },
+  }
 
   move(time) {
     switch(this.nextDirection) {
@@ -93,7 +93,7 @@ export default new Phaser.Class({
     this.nextUpdateTime = time + (1000 / this.movesPerSecond)
 
     return true
-  },
+  }
 
   overlapsWith(item) {
     if (!item) {
@@ -101,7 +101,7 @@ export default new Phaser.Class({
     }
 
     return this.head.x === item.x && this.head.y === item.y
-  },
+  }
 
   handleOverlapSelf() {
     const strandedChildren = []
@@ -140,7 +140,7 @@ export default new Phaser.Class({
         loop: false,
       })
     })
-  },
+  }
 
   handleInteractions(food) {
     if (this.overlapsWith(food)) {
@@ -149,7 +149,7 @@ export default new Phaser.Class({
     }
 
     this.handleOverlapSelf()
-  },
+  }
 
   grow(amount = 1) {
     [...Array(amount)].forEach(() => {
@@ -159,11 +159,11 @@ export default new Phaser.Class({
         .setOrigin(0)
         .setTint(this.color)
     })
-  },
+  }
 
   update(time) {
     if (time >= this.nextUpdateTime) {
       return this.move(time)
     }
-  },
-})
+  }
+}
