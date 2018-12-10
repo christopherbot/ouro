@@ -140,15 +140,14 @@ export default class Snake {
         loop: false,
       })
     })
+
+    return strandedChildren.length
   }
 
-  handleInteractions(food) {
+  handleOverlapFood(food) {
     if (this.overlapsWith(food)) {
-      this.grow()
-      food.eat()
+      return this.grow()
     }
-
-    this.handleOverlapSelf()
   }
 
   grow(amount = 1) {
@@ -159,6 +158,8 @@ export default class Snake {
         .setOrigin(0)
         .setTint(this.color)
     })
+
+    return true
   }
 
   update(time) {

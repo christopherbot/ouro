@@ -40,16 +40,28 @@ export default class Game extends BaseScene {
     lineGraphics.strokeLineShape(verticalLine)
   }
 
-  initScores() {
-    this.score1Display = this.add.text(this.middleX - 35, this.middleY + (this.courtTop / 2), this.score1, {
+  createScoreDisplay(dx, text) {
+    return this.add.text(this.middleX + dx, this.middleY + (this.courtTop / 2), text, {
       ...this.textStyles2,
       fontSize: '40px',
     }).setOrigin(0.5, 0.5)
+  }
 
-    this.score2Display = this.add.text(this.middleX + 40, this.middleY + (this.courtTop / 2), this.score2, {
-      ...this.textStyles2,
-      fontSize: '40px',
-    }).setOrigin(0.5, 0.5)
+  createFoodScoreDisplay(dx, text, color) {
+    return this.add.text(this.middleX + dx, this.courtTop / 2, text, {
+      fontFamily: "'Press Start 2P'",
+      fontSize: '20px',
+    })
+      .setOrigin(0.5, 0.5)
+      .setTint(color)
+  }
+
+  initScores() {
+    this.score1Display = this.createScoreDisplay(-35, this.score1)
+    this.score2Display = this.createScoreDisplay(40, this.score2)
+
+    this.foodScore2Display = this.createFoodScoreDisplay(0.85 * this.middleX, this.food2.total, this.color2)
+    this.foodScore1Display = this.createFoodScoreDisplay(-0.85 * this.middleX, this.food1.total, this.color1)
   }
 
   updateScore1() {
@@ -82,6 +94,14 @@ export default class Game extends BaseScene {
     }
 
     this.score2Display.setText(this.score2)
+  }
+
+  updateFoodScore1() {
+    this.foodScore1Display.setText(this.food1.total)
+  }
+
+  updateFoodScore2() {
+    this.foodScore2Display.setText(this.food2.total)
   }
 
   resetBall(directionInteger) {
@@ -118,6 +138,7 @@ export default class Game extends BaseScene {
 
     this.score1 = 0
     this.score2 = 0
+
     this.isScore1DoubleDigits = false
     this.isScore2DoubleDigits = false
     this.isScore1TripleDigits = false
@@ -137,7 +158,6 @@ export default class Game extends BaseScene {
     this.color2 = this.hexStringToColor(data.color2)
     this.addSmallGameTitle()
     this.addCourtBoundaries()
-    this.initScores()
 
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
@@ -165,6 +185,8 @@ export default class Game extends BaseScene {
       bounds: this.player2Bounds,
     })
 
+    this.initScores()
+
     this.ball = this.physics.add.image(400, 200, 'body')
       .setCollideWorldBounds(true)
       .setScale(1.6)
@@ -177,12 +199,23 @@ export default class Game extends BaseScene {
 
   update(time) {
     this.handleKeyPress()
+
     if (this.snake1.update(time)) {
-      this.snake1.handleInteractions(this.food1)
+      this.snake1.handleOverlapSelf()
+
+      if (this.snake1.handleOverlapFood(this.food1)) {
+        this.food1.eat()
+        this.updateFoodScore1()
+      }
     }
 
     if (this.snake2.update(time)) {
-      this.snake2.handleInteractions(this.food2)
+      this.snake2.handleOverlapSelf()
+
+      if (this.snake2.handleOverlapFood(this.food2)) {
+        this.food2.eat()
+        this.updateFoodScore2()
+      }
     }
 
     if (this.ball.x < 0) {
