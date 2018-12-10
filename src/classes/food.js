@@ -1,5 +1,5 @@
 export default class Food extends Phaser.GameObjects.Image {
-  constructor(scene, x, y, options) {
+  constructor(scene, x, y, options = {}) {
     super(scene, x, y)
     this.scene = scene
     Phaser.GameObjects.Image.call(this, scene)

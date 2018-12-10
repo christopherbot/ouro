@@ -4,7 +4,7 @@ const LEFT = 'LEFT'
 const RIGHT = 'RIGHT'
 
 export default class Snake {
-  constructor(scene, x, y, options) {
+  constructor(scene, x, y, options = {}) {
     this.scene = scene
 
     this.color = options.color
