@@ -5,23 +5,23 @@ const RIGHT = 'RIGHT'
 
 export default class Snake {
   constructor(scene, x, y, options = {}) {
+    this.scene = scene
+
     // TODO move into static class property
     const defaultOptions = {
       bounds: {},
-      color: 0xFFFFFF,
+      color: 0x96BD26,
       size: 16,
     }
 
     // TODO move into static proprty
     // width assumed to be the same as its height:
-    const assetSize = scene.textures.get('body').getSourceImage().width
+    const assetSize = this.scene.textures.get('body').getSourceImage().width
 
     options = {
       ...defaultOptions,
       ...options,
     }
-
-    this.scene = scene
 
     this.bounds = options.bounds
     this.color = options.color
@@ -32,7 +32,7 @@ export default class Snake {
     this.headPosition = new Phaser.Geom.Point(x, y)
     this.tail = new Phaser.Geom.Point(x, y)
 
-    this.body = scene.physics.add.group({ immovable: true })
+    this.body = this.scene.physics.add.group({ immovable: true })
 
     this.head = this.body
       .create(x * this.size, y * this.size, 'body')

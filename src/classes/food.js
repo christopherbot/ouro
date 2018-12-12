@@ -1,13 +1,30 @@
 export default class Food extends Phaser.GameObjects.Image {
   constructor(scene, x, y, options = {}) {
     super(scene, x, y)
+
     this.scene = scene
-    Phaser.GameObjects.Image.call(this, scene)
+    Phaser.GameObjects.Image.call(this, this.scene)
+
+    // TODO move into static class property
+    const defaultOptions = {
+      bounds: {},
+      color: 0xFFFFFF,
+      size: 16,
+    }
+
+    options = {
+      ...defaultOptions,
+      ...options,
+    }
+
+    // TODO move into static proprty
+    // width assumed to be the same as its height:
+    const assetSize = this.scene.textures.get('body').getSourceImage().width
 
     this.color = options.color
     this.bounds = options.bounds
-    this.size = options.size || 16
-    this.scale = this.size / 10 // the `body` asset is 10x10
+    this.size = options.size
+    this.scale = this.size / assetSize
 
     this.setTexture('body')
     this.setPosition(x * this.size, y * this.size)
@@ -18,7 +35,7 @@ export default class Food extends Phaser.GameObjects.Image {
 
     this.total = 0
 
-    scene.children.add(this)
+    this.scene.children.add(this)
   }
 
   reposition(x, y) {
