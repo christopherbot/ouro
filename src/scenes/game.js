@@ -108,7 +108,11 @@ export default class Game extends BaseScene {
     this.ball.setVelocity(0)
     this.ball.x = this.middleX
     this.ball.y = this.middleY + (this.courtTop / 2)
-    setTimeout(() => this.ball.setVelocity(directionInteger * 150, 150), 1000)
+
+    setTimeout(() => this.ball.setVelocity(
+      directionInteger * this.ballStartingVelocity,
+      this.ballStartingVelocity
+    ), 1000)
   }
 
   handleKeyPress() {
@@ -144,9 +148,27 @@ export default class Game extends BaseScene {
     this.isScore1TripleDigits = false
     this.isScore2TripleDigits = false
     // Oh man I hope no one is playing into quadruple digits...
+
+    this.ballStartingVelocity = 150
+    this.ballVelocityMultiplier = 1.1
   }
 
   hitBall(snake, ball, snakeBody) {
+    // The ball velocity has been updated by the hit at this point.
+    const { x: vx, y: vy } = ball.body.velocity
+
+    if (vx === 0 && vy === 0) {
+      // don't do anything if the ball is at its starting position
+      return
+    }
+
+    const upperVelocityBound = velocity => velocity * this.ballVelocityMultiplier
+
+    ball.setVelocity(
+      Phaser.Math.Between(vx, upperVelocityBound(vx)),
+      Phaser.Math.Between(vy, upperVelocityBound(vy)),
+    )
+
     snakeBody.setTint(0xFFFFFF)
     setTimeout(() => snakeBody.setTint(snake.color), 100)
   }
@@ -191,7 +213,7 @@ export default class Game extends BaseScene {
       .setCollideWorldBounds(true)
       .setScale(1.6)
       .setBounce(1)
-      .setVelocity(150, 150)
+      .setVelocity(this.ballStartingVelocity)
 
     this.physics.add.collider(this.ball, this.snake1.body, this.hitBall.bind(this, this.snake1), null, this)
     this.physics.add.collider(this.ball, this.snake2.body, this.hitBall.bind(this, this.snake2), null, this)
