@@ -12,6 +12,7 @@ export default class Snake {
       bounds: {},
       color: 0x96BD26,
       size: 16,
+      movesPerSecond: 12,
     }
 
     // TODO move into static proprty
@@ -26,6 +27,7 @@ export default class Snake {
     this.bounds = options.bounds
     this.color = options.color
     this.size = options.size
+    this.movesPerSecond = options.movesPerSecond
 
     this.scale = this.size / assetSize
 
@@ -41,7 +43,6 @@ export default class Snake {
       .setTint(this.color)
 
 
-    this.movesPerSecond = 12
 
     this.nextUpdateTime = 0
 
