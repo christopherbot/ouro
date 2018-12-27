@@ -93,6 +93,7 @@ export default class Title extends BaseScene {
   preload() {
     this.load.spritesheet('snake', 'assets/snakeSprite.png', { frameWidth: 56, frameHeight: 14 })
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
+    this.load.audio('title', 'assets/audio/titleTheme.wav')
   }
 
   addText() {
@@ -102,6 +103,20 @@ export default class Title extends BaseScene {
 
   create() {
     this.loading = true
+
+    this.mainTheme = this.sound.add('title')
+    this.mainTheme.play()
+    /*
+     * FIXME
+     *
+     * This timeout is used instead of setting the song to loop
+     * because the song is not the right duration.
+     *
+     * Fix the song file and change the above to:
+     *
+     *     this.mainTheme = this.sound.add('title', { loop: true })
+     */
+    this.mainTheme.on('ended', sound => setTimeout(() => sound.play(), 1100))
 
     WebFont.load({
       google: {
