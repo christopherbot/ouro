@@ -137,6 +137,16 @@ export default class Game extends BaseScene {
     }
   }
 
+  changeMusicTheme() {
+    const complexTheme = this.sound.add('complexTheme', { loop: true })
+
+    const simpleTheme = this.sound.sounds.find(({ key }) => key === 'simpleTheme')
+    const currentSeek = simpleTheme.seek
+
+    simpleTheme.stop()
+    complexTheme.play({ seek: currentSeek })
+  }
+
   preload() {
     this.load.image('body', 'assets/body.png')
 
@@ -174,6 +184,8 @@ export default class Game extends BaseScene {
   }
 
   create(data) {
+    this.changeMusicTheme()
+
     this.physics.world.setBounds(0, this.courtTop, this.gameWidth, this.gameHeight - this.courtTop)
     this.physics.world.setBoundsCollision(false, false, true, true)
     this.color1 = this.hexStringToColor(data.color1)
