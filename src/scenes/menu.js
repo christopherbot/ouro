@@ -145,12 +145,26 @@ export default class Menu extends BaseScene {
     )
   }
 
+  addAudioText() {
+    return this.add.text(
+      this.middleX,
+      60,
+      this.sound.mute ? this.audioOffText : this.audioOnText,
+      this.menuTextStyles,
+    )
+      .setOrigin(0.5, 0)
+  }
+
   handleKeyPress() {
     if (this.keyJustDown(this.enterKey)) {
       this.scene.start('game', {
         color1: this.colors[this.player1ColorIndex],
         color2: this.colors[this.player2ColorIndex],
       })
+    }
+
+    if (this.keyJustDown(this.keyM)) {
+      this.toggleAudioMute(this.audioText)
     }
 
     if (this.keyJustDown(this.keyD)) {
@@ -213,12 +227,14 @@ export default class Menu extends BaseScene {
     this.addPlayerSections()
     this.addGameInstructions()
     this.addGamePrompt()
+    this.audioText = this.addAudioText()
 
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
     this.keyA = this.addKey('A')
     this.keyS = this.addKey('S')
     this.keyD = this.addKey('D')
+    this.keyM = this.addKey('M')
     this.enterKey = this.addKey('ENTER')
 
     this.player1ColorIndex = 0

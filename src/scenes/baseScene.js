@@ -19,6 +19,20 @@ export default class BaseScene extends Phaser.Scene {
     return this.gameHeight / 2
   }
 
+  get audioOnText() {
+    return 'audio: on [m]'
+  }
+
+  get audioOffText() {
+    return 'audio: off [m]'
+  }
+
+  toggleAudioMute(audioText) {
+    const shouldMute = !this.sound.mute
+    this.sound.setMute(shouldMute)
+    audioText && audioText.setText(shouldMute ? this.audioOffText : this.audioOnText)
+  }
+
   get textStyles() {
     return {
       fontFamily: 'Cabin',
