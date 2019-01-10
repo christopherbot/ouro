@@ -160,8 +160,30 @@ export default class Game extends BaseScene {
     const simpleTheme = this.sound.sounds.find(({ key }) => key === 'simpleTheme')
     const currentSeek = simpleTheme.seek
 
-    simpleTheme.stop()
-    complexTheme.play({ seek: currentSeek })
+    // crossfade the two sounds using tweens
+    const crossfadeDurationInMs = 1000
+
+    this.tweens.add({
+      targets: simpleTheme,
+      volume: {
+        getStart: () => 1,
+        getEnd: () => 0,
+      },
+      duration: crossfadeDurationInMs,
+      ease: 'Linear',
+      onComplete: () => simpleTheme.stop(),
+    })
+
+    this.tweens.add({
+      targets: complexTheme,
+      onStart: () => complexTheme.play({ seek: currentSeek }),
+      volume: {
+        getStart: () => 0,
+        getEnd: () => 1,
+      },
+      duration: crossfadeDurationInMs,
+      ease: 'Linear',
+    })
   }
 
   preload() {
