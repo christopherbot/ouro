@@ -85,6 +85,10 @@ export default class Title extends BaseScene {
   }
 
   handleKeyPress() {
+    if (this.keyJustDown(this.keyM)) {
+      this.toggleAudioMute()
+    }
+
     if (this.keyJustDown(this.enterKey)) {
       this.scene.start('menu')
     }
@@ -120,6 +124,7 @@ export default class Title extends BaseScene {
     })
 
     this.enterKey = this.addKey('ENTER')
+    this.keyM = this.addKey('M')
   }
 
   update(time, delta) {

@@ -29,7 +29,7 @@ export default class Game extends BaseScene {
     }
   }
 
-  addCourtBoundaries() {
+  drawCourtBoundaries() {
     const horizontalLine1 = new Phaser.Geom.Line(0, this.courtTop, this.gameWidth, this.courtTop)
     const horizontalLine2 = new Phaser.Geom.Line(0, this.gameHeight - 1, this.gameWidth, this.gameHeight - 1)
     const verticalLine = new Phaser.Geom.Line(this.middleX, this.courtTop + 1, this.middleX, this.gameHeight - 2)
@@ -116,6 +116,10 @@ export default class Game extends BaseScene {
   }
 
   handleKeyPress() {
+    if (this.keyJustDown(this.keyM)) {
+      this.toggleAudioMute(this.audioText)
+    }
+
     if (this.keyJustDown(this.keyD)) {
       this.snake1.goRight()
     } else if (this.keyJustDown(this.keyA)) {
@@ -135,6 +139,19 @@ export default class Game extends BaseScene {
     } else if (this.keyJustDown(this.cursors.down)) {
       this.snake2.goDown()
     }
+  }
+
+  addAudioText() {
+    return this.add.text(
+      this.middleX * 1.5,
+      this.courtTop / 2,
+      this.sound.mute ? this.audioOffText : this.audioOnText,
+      {
+        ...this.textStyles2,
+        fontSize: '12px',
+      },
+    )
+      .setOrigin(0.5, 0.5)
   }
 
   changeMusicTheme() {
@@ -191,13 +208,15 @@ export default class Game extends BaseScene {
     this.color1 = this.hexStringToColor(data.color1)
     this.color2 = this.hexStringToColor(data.color2)
     this.addSmallGameTitle()
-    this.addCourtBoundaries()
+    this.drawCourtBoundaries()
+    this.audioText = this.addAudioText()
 
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')
     this.keyA = this.addKey('A')
     this.keyS = this.addKey('S')
     this.keyD = this.addKey('D')
+    this.keyM = this.addKey('M')
 
     this.snake1 = new Snake(this, 10, 10, {
       color: this.color1,
