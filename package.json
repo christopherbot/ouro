@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --hot --open",
-    "build": "webpack",
-    "build-gh-pages": "webpack && rm -rf assets && cp -r ./build/* ./"
+    "start": "webpack-dev-server --hot --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
+    "build-gh-pages": "yarn build && rm -rf assets && cp -r ./build/* ./"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -14,9 +14,10 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "copy-webpack-plugin": "^4.5.2",
-    "webpack": "^3.11.0",
+    "webpack": "^4.28.4",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^2.11.2"
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "phaser": "^3.0.0"

@@ -5,12 +5,13 @@ const webpack = require('webpack')
 module.exports = {
   entry: {
     app: `${__dirname}/src/index.js`,
-    'production-dependencies': ['phaser'],
   },
 
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'app.bundle.js',
+    filename: '[name].bundle.js',
+    // TODO check if this is this necessary (maybe for production):
+    // chunkFilename: '[name].[chunkhash].bundle.js',
   },
 
   module: {
@@ -28,12 +29,6 @@ module.exports = {
     ]
   },
 
-  devtool: 'inline-source-map',
-
-  devServer: {
-    contentBase: path.resolve(__dirname, 'build'),
-  },
-
   plugins: [
     new CopyWebpackPlugin([
       {
@@ -49,11 +44,6 @@ module.exports = {
     new webpack.DefinePlugin({
       'typeof CANVAS_RENDERER': JSON.stringify(true),
       'typeof WEBGL_RENDERER': JSON.stringify(true),
-    }),
-
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'production-dependencies',
-      filename: 'production-dependencies.bundle.js'
     }),
   ],
 }
