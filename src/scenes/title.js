@@ -161,8 +161,8 @@ export default class Title extends BaseScene {
   preload() {
     this.load.spritesheet('snake', 'assets/snakeSprite.png', { frameWidth: 56, frameHeight: 14 })
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
-    this.load.audio('simpleTheme', 'assets/audio/simpleTheme.wav')
-    this.load.audio('complexTheme', 'assets/audio/complexTheme.wav')
+    this.load.audio('simpleTheme', 'assets/audio/simpleTheme.ogg')
+    this.load.audio('complexTheme', 'assets/audio/complexTheme.ogg')
 
     this.drawProgressBar()
   }
