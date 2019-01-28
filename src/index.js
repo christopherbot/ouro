@@ -3,6 +3,8 @@ import Title from './scenes/title'
 import Menu from './scenes/menu'
 import Game from './scenes/game'
 
+import './index.css'
+
 const gameConfig = {
   width: 800,
   height: 560,
