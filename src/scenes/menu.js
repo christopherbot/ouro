@@ -116,9 +116,11 @@ export default class Menu extends BaseScene {
       15,
     )
 
-    this.cursorGraphics = this.add.graphics({ fillStyle: { color: 0xFFFFFF } })
-    this.cursorGraphics.fillTriangleShape(this.cursor1)
-    this.cursorGraphics.fillTriangleShape(this.cursor2)
+    this.cursorGraphics1 = this.add.graphics({ fillStyle: { color: 0xFFFFFF } })
+    this.cursorGraphics2 = this.add.graphics({ fillStyle: { color: 0xFFFFFF } })
+
+    this.cursorGraphics1.fillTriangleShape(this.cursor1)
+    this.cursorGraphics2.fillTriangleShape(this.cursor2)
   }
 
   addGameInstructions() {
@@ -175,6 +177,8 @@ export default class Menu extends BaseScene {
         this.player1ColorIndex += 1
         this.cursor1.left += 30
       }
+
+      this.changePlayerHeaderFill(1)
     }
 
     if (this.keyJustDown(this.keyA)) {
@@ -185,6 +189,8 @@ export default class Menu extends BaseScene {
         this.player1ColorIndex -= 1
         this.cursor1.left -= 30
       }
+
+      this.changePlayerHeaderFill(1)
     }
 
     if (this.keyJustDown(this.cursors.right)) {
@@ -195,6 +201,8 @@ export default class Menu extends BaseScene {
         this.player2ColorIndex += 1
         this.cursor2.left += 30
       }
+
+      this.changePlayerHeaderFill(2)
     }
 
     if (this.keyJustDown(this.cursors.left)) {
@@ -205,16 +213,16 @@ export default class Menu extends BaseScene {
         this.player2ColorIndex -= 1
         this.cursor2.left -= 30
       }
+
+      this.changePlayerHeaderFill(2)
     }
   }
 
-  changePlayerHeaderFills() {
-    this.player1Header.setFill(`${this.colors[this.player1ColorIndex]}`)
-    this.player2Header.setFill(`${this.colors[this.player2ColorIndex]}`)
+  changePlayerHeaderFill(i) {
+    this[`player${i}Header`].setFill(`${this.colors[this[`player${i}ColorIndex`]]}`)
 
-    this.cursorGraphics.clear()
-    this.cursorGraphics.fillTriangleShape(this.cursor1)
-    this.cursorGraphics.fillTriangleShape(this.cursor2)
+    this[`cursorGraphics${i}`].clear()
+    this[`cursorGraphics${i}`].fillTriangleShape(this[`cursor${i}`])
   }
 
   preload() {
@@ -243,6 +251,5 @@ export default class Menu extends BaseScene {
 
   update() {
     this.handleKeyPress()
-    this.changePlayerHeaderFills()
   }
 }
