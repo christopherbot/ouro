@@ -96,6 +96,8 @@ export default class Loading extends BaseScene {
         families: ['Cabin', 'Press Start 2P']
       },
       active: () => {
+        // Finish "loading" here instead of load.on('complete')
+        // because this takes a little bit longer.
         this.loading = false
       },
     })
