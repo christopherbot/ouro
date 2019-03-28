@@ -37,9 +37,22 @@ export default class OnlineMenu extends BaseScene {
     ).setOrigin(0.5, 0)
   }
 
+  addTitlePrompt() {
+    this.titlePrompt = this.add.text(
+      this.middleX,
+      470,
+      'return to title [enter]',
+      this.menuTextStyles,
+    ).setOrigin(0.5, 0)
+  }
+
   handleKeyPress() {
     if (this.keyJustDown(this.keyM)) {
       this.toggleAudioMute(this.audioText)
+    }
+
+    if (this.keyJustDown(this.enterKey)) {
+      this.scene.start('title')
     }
   }
 
@@ -47,11 +60,13 @@ export default class OnlineMenu extends BaseScene {
   }
 
   create() {
+    this.enterKey = this.addKey('ENTER')
     this.keyM = this.addKey('M')
 
     this.audioText = this.addAudioText()
     this.addSmallGameTitle()
     this.addText()
+    this.addTitlePrompt()
   }
 
   update() {
