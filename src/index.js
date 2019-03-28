@@ -1,6 +1,7 @@
 import 'phaser'
 import Title from './scenes/title'
 import Menu from './scenes/menu'
+import OnlineMenu from './scenes/onlineMenu'
 import Game from './scenes/game'
 
 import './index.css'
@@ -12,7 +13,7 @@ const gameConfig = {
   physics: {
     default: 'arcade'
   },
-  scene: [Title, Menu, Game],
+  scene: [Title, Menu, Game, OnlineMenu],
 }
 
 const game = new Phaser.Game(gameConfig)

@@ -9,10 +9,6 @@ export default class Title extends BaseScene {
     return 'hit [enter]'
   }
 
-  get snakeSpriteHeight() {
-    return this.gameHeight - 70
-  }
-
   drawProgressBar() {
     const progressText = this.add.text(
       this.middleX,
@@ -80,7 +76,7 @@ export default class Title extends BaseScene {
   addGameTitle() {
     this.add.text(
       this.middleX,
-      this.middleY - 50,
+      this.middleY - 100,
       this.gameTitle.toUpperCase(),
       {
         ...this.textStyles,
@@ -95,7 +91,7 @@ export default class Title extends BaseScene {
   addMenuPrompt() {
     this.menuPrompt = this.add.text(
       this.middleX,
-      this.middleY + 75,
+      this.middleY + 175,
       this.menuPromptText,
       {
         ...this.textStyles2,
@@ -116,9 +112,53 @@ export default class Title extends BaseScene {
     )
   }
 
-  addSnakeAnimation() {
-    this.snakeAnimation = this.add.sprite(this.middleX, this.snakeSpriteHeight, 'snake').setScale(1.5)
-    this.isSnakeMovingUp = true
+  get selections() {
+    return [{
+      label: 'Local',
+      scene: 'menu',
+    }, {
+      label: 'Online',
+      scene: 'onlineMenu',
+    }]
+  }
+
+  get selectionTextStyles() {
+    return {
+      ...this.textStyles2,
+      fontSize: '16px',
+    }
+  }
+
+  addSelections() {
+    const getContainerWidth = (width, child) => {
+      if (child.x + child.width > width) {
+        width = child.x + child.width
+      }
+
+      return width
+    }
+
+    const selections = this.selections.map((selection, i) => {
+      return this.add.text(0, i * this.selectionSpacing, selection.label, this.selectionTextStyles)
+    })
+
+    const containerWidth = selections.reduce(getContainerWidth, 0)
+
+    this.selectionContainer = this.add.container(
+      this.middleX - containerWidth / 2,
+      this.middleY + this.selectionSpacing,
+      selections,
+    )
+
+    this.snakeCursor = this.add.sprite(
+      this.selectionContainer.x + containerWidth + 10,
+      this.selectionContainer.y - 5,
+      'snake',
+    )
+      .setScale(1.5)
+      .setOrigin(0, 0)
+
+    this.nextSnakeCursorY = this.snakeCursor.y
 
     this.anims.create({
       key: 'snakeDance',
@@ -127,24 +167,14 @@ export default class Title extends BaseScene {
       repeat: -1,
     })
 
-    this.snakeAnimation.anims.play('snakeDance')
+    this.snakeCursor.anims.play('snakeDance')
   }
 
-  moveSnake(delta) {
-    this.snakeAnimation.x = Phaser.Math.Wrap(this.snakeAnimation.x - delta / 8, -45, this.gameWidth + 45)
+  moveSnakeCursor(delta) {
+    const remainder =  this.nextSnakeCursorY - this.snakeCursor.y
 
-    if (this.isSnakeMovingUp) {
-      this.snakeAnimation.y -= delta / 16
-
-      if (this.snakeAnimation.y < this.snakeSpriteHeight - 30) {
-        this.isSnakeMovingUp = false
-      }
-    } else {
-      this.snakeAnimation.y += delta / 16
-
-      if (this.snakeAnimation.y > this.snakeSpriteHeight + 30) {
-        this.isSnakeMovingUp = true
-      }
+    if (remainder !== 0) {
+      this.snakeCursor.y += remainder / delta
     }
   }
 
@@ -153,8 +183,29 @@ export default class Title extends BaseScene {
       this.toggleAudioMute()
     }
 
+    if (this.keyJustDown(this.keyS) || this.keyJustDown(this.cursors.down)) {
+      if (this.selectionIndex === this.selections.length - 1) {
+        this.selectionIndex = 0
+        this.nextSnakeCursorY -= (this.selectionSpacing * (this.selections.length - 1))
+      } else {
+        this.selectionIndex += 1
+        this.nextSnakeCursorY += this.selectionSpacing
+      }
+    }
+
+    if (this.keyJustDown(this.keyW) || this.keyJustDown(this.cursors.up)) {
+      if (this.selectionIndex === 0) {
+        this.selectionIndex = this.selections.length - 1
+        this.nextSnakeCursorY += (this.selectionSpacing * (this.selections.length - 1))
+      } else {
+        this.selectionIndex -= 1
+        this.nextSnakeCursorY -= this.selectionSpacing
+      }
+    }
+
     if (this.keyJustDown(this.enterKey)) {
-      this.scene.start('menu')
+      const nextScene = this.selections[this.selectionIndex].scene
+      this.scene.start(nextScene)
     }
   }
 
@@ -167,8 +218,12 @@ export default class Title extends BaseScene {
     this.drawProgressBar()
   }
 
-  addText() {
+  _create() {
+    this.selectionIndex = 0
+    this.selectionSpacing = 50
+
     this.addGameTitle()
+    this.addSelections()
     this.addMenuPrompt()
   }
 
@@ -184,12 +239,15 @@ export default class Title extends BaseScene {
       },
       active: () => {
         this.loading = false
-        this.addText()
-        this.addSnakeAnimation()
+        this._create()
       },
     })
 
+
     this.enterKey = this.addKey('ENTER')
+    this.cursors = this.createCursorKeys()
+    this.keyW = this.addKey('W')
+    this.keyS = this.addKey('S')
     this.keyM = this.addKey('M')
   }
 
@@ -198,7 +256,7 @@ export default class Title extends BaseScene {
       return
     }
 
-    this.moveSnake(delta)
+    this.moveSnakeCursor(delta)
     this.handleKeyPress()
   }
 }
