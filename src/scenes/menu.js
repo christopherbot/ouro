@@ -247,6 +247,8 @@ export default class Menu extends BaseScene {
 
     this.player1ColorIndex = 0
     this.player2ColorIndex = 1
+    this.changePlayerHeaderFill(1)
+    this.changePlayerHeaderFill(2)
   }
 
   update() {
