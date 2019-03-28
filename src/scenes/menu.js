@@ -226,8 +226,6 @@ export default class Menu extends BaseScene {
   }
 
   preload() {
-    this.load.image('WASD', 'assets/WASD.png')
-    this.load.image('arrowKeys', 'assets/arrowKeys.png')
   }
 
   create() {
