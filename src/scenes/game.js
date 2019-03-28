@@ -187,8 +187,6 @@ export default class Game extends BaseScene {
   }
 
   preload() {
-    this.load.image('body', 'assets/body.png')
-
     this.score1 = 0
     this.score2 = 0
 

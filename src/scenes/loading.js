@@ -71,10 +71,16 @@ export default class Loading extends BaseScene {
   }
 
   preload() {
-    this.load.spritesheet('snake', 'assets/snakeSprite.png', { frameWidth: 56, frameHeight: 14 })
     this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
+
     this.load.audio('simpleTheme', 'assets/audio/simpleTheme.ogg')
     this.load.audio('complexTheme', 'assets/audio/complexTheme.ogg')
+
+    this.load.spritesheet('snake', 'assets/snakeSprite.png', { frameWidth: 56, frameHeight: 14 })
+
+    this.load.image('WASD', 'assets/WASD.png')
+    this.load.image('arrowKeys', 'assets/arrowKeys.png')
+    this.load.image('body', 'assets/body.png')
 
     this.drawProgressBar()
   }
