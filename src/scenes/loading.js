@@ -83,11 +83,11 @@ export default class Loading extends BaseScene {
     this.load.image('body', 'assets/body.png')
 
     this.drawProgressBar()
+
+    this.loading = true
   }
 
   create() {
-    this.loading = true
-
     const simpleTheme = this.sound.add('simpleTheme', { loop: true })
     simpleTheme.play()
 
