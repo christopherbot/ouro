@@ -146,12 +146,11 @@ export default class Title extends BaseScene {
   }
 
   preload() {
+    this.selectionIndex = 0
+    this.selectionSpacing = 50
   }
 
   create() {
-    this.selectionIndex = 0
-    this.selectionSpacing = 50
-
     this.enterKey = this.addKey('ENTER')
     this.cursors = this.createCursorKeys()
     this.keyW = this.addKey('W')

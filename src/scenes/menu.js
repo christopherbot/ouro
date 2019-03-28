@@ -226,6 +226,8 @@ export default class Menu extends BaseScene {
   }
 
   preload() {
+    this.player1ColorIndex = 0
+    this.player2ColorIndex = 1
   }
 
   create() {
@@ -243,8 +245,6 @@ export default class Menu extends BaseScene {
     this.keyM = this.addKey('M')
     this.enterKey = this.addKey('ENTER')
 
-    this.player1ColorIndex = 0
-    this.player2ColorIndex = 1
     this.changePlayerHeaderFill(1)
     this.changePlayerHeaderFill(2)
   }
