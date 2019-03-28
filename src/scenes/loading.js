@@ -40,7 +40,8 @@ export default class Loading extends BaseScene {
     tongueTip.fillRect(x + width + tongueTipLength, y + 0.5 * tongueHeight, tongueHeight, tongueHeight)
 
     this.load.on('progress', (value) => {
-      progressText.setText(`${value * 100}%`)
+      const percent = Math.round(value * 100)
+      progressText.setText(`${percent}%`)
 
       const newWidth = width * value
 
