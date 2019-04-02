@@ -22,6 +22,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "colyseus": "^0.10.3",
     "phaser": "^3.0.0"
   }
 }
