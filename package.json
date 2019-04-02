@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "colyseus": "^0.10.3",
+    "colyseus.js": "^0.10.4",
     "phaser": "^3.0.0"
   }
 }
