@@ -109,7 +109,7 @@ export default class Title extends BaseScene {
   moveSnakeCursor(delta) {
     const remainder =  this.nextSnakeCursorY - this.snakeCursor.y
 
-    if (remainder !== 0) {
+    if (Math.abs(remainder) > 0.5) {
       this.snakeCursor.y += remainder / delta
     }
   }
