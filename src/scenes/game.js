@@ -1,6 +1,9 @@
+import { Client } from 'colyseus.js'
 import BaseScene from './baseScene'
 import Snake from '../classes/snake'
 import Food from '../classes/food'
+
+const client = new Client('ws://127.0.0.1:2657')
 
 export default class Game extends BaseScene {
   constructor() {
@@ -221,6 +224,23 @@ export default class Game extends BaseScene {
   }
 
   create(data) {
+    const room = client.join('game')
+
+    room.listen('players/:id', ({ path: { id }, operation, value }) => {
+      if (operation === 'add') {
+        // this.avatars[id] = this.add.image(value.x, value.y, 'avatar')
+      }
+      if (operation === 'remove') {
+        // this.avatars[id].destroy()
+      }
+    })
+
+    room.listen('players/:id/:attribute', ({ path: { id, attribute }, value, operation }) => {
+      if (operation === "replace") {
+        // this.avatars[id][attribute] = value
+      }
+    })
+
     this.changeMusicTheme()
 
     this.physics.world.setBounds(0, this.courtTop, this.gameWidth, this.gameHeight - this.courtTop)
