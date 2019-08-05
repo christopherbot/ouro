@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot --open --config webpack.dev.js",
+    "server": "nodemon src/server/index.js",
     "build": "webpack --config webpack.prod.js",
     "build-gh-pages": "yarn build && rm -rf assets && cp -r ./build/* ./"
   },

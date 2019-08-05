@@ -91,6 +91,13 @@ export default class Loading extends BaseScene {
     const simpleTheme = this.sound.add('simpleTheme', { loop: true })
     simpleTheme.play()
 
+    this.anims.create({
+      key: 'snakeDance',
+      frames: this.anims.generateFrameNames('snake', { start: 1, end: 4 }),
+      frameRate: 5,
+      repeat: -1,
+    })
+
     WebFont.load({
       google: {
         families: ['Cabin', 'Press Start 2P']
